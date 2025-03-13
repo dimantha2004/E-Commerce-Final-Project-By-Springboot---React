@@ -1,0 +1,84 @@
+.footer-links a {
+    transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #f68b1e;
+    opacity: 0.8;
+}
+
+.footer {
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid #444;
+    transition: background-color 0.3s ease;
+}
+
+.footer-info p:hover {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.footer-info p {
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.footer:hover {
+    background-color: #444;
+}
+
+.footer-links ul:hover {
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.footer-links ul {
+    transition: opacity 0.3s ease;
+}
+
+.footer-links li:hover {
+    transform: translateY(-2px);
+    transition: transform 0.3s ease;
+}
+
+.footer-links li {
+    transition: transform 0.3s ease;
+}
+
+.footer-info:hover {
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.footer-info {
+    transition: opacity 0.3s ease;
+}
+
+.footer-brand img:hover {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.footer-brand img {
+    transition: opacity 0.3s ease;
+}
+
+.footer-info p:hover {
+    color: #f68b1e;
+}
+
+.footer-links:hover {
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.footer-links {
+    transition: opacity 0.3s ease;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-links a {
+    transition: text-decoration 0.3s ease;
+}
