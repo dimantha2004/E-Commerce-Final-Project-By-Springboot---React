@@ -6,3 +6,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+jwt:
+  secretKey: MjAwNDE4MzA0MjgwcGFrYXlhMjAwNDE4MzA0MjgwcGFrYXlh
+
