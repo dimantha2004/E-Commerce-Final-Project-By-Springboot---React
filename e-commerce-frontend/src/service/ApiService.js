@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default class ApiService{
 
-    static BASE_URl="http://localhost:8080";
+    static BASE_URL="http://localhost:8080";
 
     static getHeader(){
         const token=localStorage.getItem("token");
@@ -56,7 +56,7 @@ export default class ApiService{
             return response.data;
         }
 
-        static async searchProducts() {
+        static async searchProducts(searchValue) {
             const response = await axios.get(`${this.BASE_URL}/product/search`,{
                 params:{searchValue}
         });
@@ -64,7 +64,7 @@ export default class ApiService{
         }
 
         static async getAllProductsByCategoryId(categoryId) {
-            const response = await axios.get(`${this.BASE_URL}/product/get-by-category-id/${productId}`)
+            const response = await axios.get(`${this.BASE_URL}/product/get-by-category-id/${categoryId}`)
             return response.data;
         }
 
