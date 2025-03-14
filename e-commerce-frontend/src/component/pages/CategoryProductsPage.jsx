@@ -15,7 +15,7 @@ const CategoryProductsPage = ()=>{
     const itemsPerPage = 8;
 
     useEffect(()=>{
-
+        fetchProducts();
     },[categoryId,currentPage]);
 
     const fetchProducts=async()=>{
@@ -29,5 +29,19 @@ const CategoryProductsPage = ()=>{
             setError(error.response?.data?.message || error.message || 'unable to fetch products by categoty id')
         }
     }
-
+    return(
+        <div className="home">
+            {error ? (
+                <p className="error-message">{error}</p>
+            ):(
+                <div>
+                    <ProductList products={products}/>
+                    <Pagination  currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={(page)=> setCurrentPage(page)}/>
+                </div>
+            )}
+        </div>
+    )
 }
+export default CategoryProductsPage;
