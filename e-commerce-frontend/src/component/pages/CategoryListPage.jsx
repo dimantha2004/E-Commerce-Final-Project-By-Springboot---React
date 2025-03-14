@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ApiService from "../../service/ApiService";
 import '../../style/categoryListPage.css'
 
-const categoryListPage = () => {
+const CategoryListPage = () => {
     const [categories,setCategories] = useState ([]);
     const [error,setError]=useState(null);
     const navigate=useNavigate();
