@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import '../../style/productList.css';
 
-const ProductList = ({products})=>{
-    const {cart,dispatch}=useCart();
+
+const ProductList = ({products}) => {
+    const {cart, dispatch} = useCart();
 
     const addToCart = (product) => {
         dispatch({type: 'ADD_ITEM', payload: product});
@@ -23,6 +24,7 @@ const ProductList = ({products})=>{
             dispatch({type: 'REMOVE_ITEM', payload: product}); 
         }
     }
+
     return(
         <div className="product-list">
                 {products.map((product, index) => {

@@ -1,177 +1,145 @@
 import axios from "axios";
 
-export default class ApiService{
+export default class ApiService {
+    static BASE_URL = "http://localhost:8080";
 
-    static BASE_URL="http://localhost:8080";
-
-    static getHeader(){
-        const token=localStorage.getItem("token");
-        return{
-            Authorization:`Bearer ${token}`,
-            "Content-Type":"application/json"
+    static getHeader() {
+        const token = localStorage.getItem("token");
+        return {
+            Authorization: token ? `Bearer ${token}` : "",
+            "Content-Type": "application/json"
         };
     }
 
+    static async makeRequest(method, url, data = null, params = null) {
+        try {
+            const response = await axios({
+                method,
+                url: `${this.BASE_URL}${url}`,
+                headers: this.getHeader(),
+                data,
+                params
+            });
+            return response.data;
+        } catch (error) {
+            console.error(`Error making ${method} request to ${url}:`, error);
+            throw error;
+        }
+    }
+
     /*-----User-----*/
-        static async registerUser(registration) {
-            const response = await axios.post(`${this.BASE_URL}/auth/register`, registration)
-            return response.data;
-        }
+    static async registerUser(registration) {
+        return this.makeRequest("post", "/auth/register", registration);
+    }
 
-        static async loginUser(loginDetails) {
-            const response = await axios.post(`${this.BASE_URL}/auth/login`, loginDetails)
-            return response.data;
-        }
+    static async loginUser(loginDetails) {
+        return this.makeRequest("post", "/auth/login", loginDetails);
+    }
 
-        static async getLoggedInUserInfo() {
-            const response = await axios.get(`${this.BASE_URL}/user/my-info`, {
-                headers:this.getHeader()
-            })
-            return response.data;
-        }
+    static async getLoggedInUserInfo() {
+        return this.makeRequest("get", "/user/my-info");
+    }
 
     /*-----Product-----*/
-        static async addProduct(formData) {
-            const response = await axios.post(`${this.BASE_URL}/product/create`, formData,{
-                headers:{
-                    ...this.getHeader(),
-                "Content-Type":"multipart/form-data"    
-                }
-            })
-            return response.data;
-        }
-
-        static async updateProduct(productId,formData) {
-            const response = await axios.put(`${this.BASE_URL}/product/update/${productId}`, formData,{
-                headers:{
-                    ...this.getHeader(),
-                "Content-Type":"multipart/form-data"    
-                }
-            })
-            return response.data;
-        }
-
-        static async getAllProducts() {
-            const response = await axios.get(`${this.BASE_URL}/product/get-all`)
-            return response.data;
-        }
-
-        static async searchProducts(searchValue) {
-            const response = await axios.get(`${this.BASE_URL}/product/search`,{
-                params:{searchValue}
+    static async addProduct(formData) {
+        return this.makeRequest("post", "/product/create", formData, {
+            headers: {
+                ...this.getHeader(),
+                "Content-Type": "multipart/form-data"
+            }
         });
-            return response.data;
-        }
+    }
 
-        static async getAllProductsByCategoryId(categoryId) {
-            const response = await axios.get(`${this.BASE_URL}/product/get-by-category-id/${categoryId}`)
-            return response.data;
-        }
+    static async updateProduct(productId, formData) {
+        return this.makeRequest("put", `/product/update/${productId}`, formData, {
+            headers: {
+                ...this.getHeader(),
+                "Content-Type": "multipart/form-data"
+            }
+        });
+    }
 
-        static async getProductById(productId) {
-            const response = await axios.get(`${this.BASE_URL}/product/get-by-product-id/${productId}`)
-            return response.data;
-        }
+    static async getAllProducts(page = 0, size = 10) {
+        return this.makeRequest("get", "/product/get-all", null, { page, size });
+    }
 
-        static async deleteProduct(productId) {
-            const response = await axios.delete(`${this.BASE_URL}/product/delete/${productId}`,{
-                headers:this.getHeader()
-            })
-            return response.data;
-        }
+    static async searchProducts(searchValue) {
+        return this.makeRequest("get", "/product/search", null, { searchValue });
+    }
+
+    static async getAllProductsByCategoryId(categoryId) {
+        return this.makeRequest("get", `/product/get-by-category-id/${categoryId}`);
+    }
+
+    static async getProductById(productId) {
+        return this.makeRequest("get", `/product/get-by-product-id/${productId}`);
+    }
+
+    static async deleteProduct(productId) {
+        return this.makeRequest("delete", `/product/delete/${productId}`);
+    }
 
     /*-----Category-----*/
-        static async createCategory(body) {
-            const response = await axios.post(`${this.BASE_URL}/category/create`, body, {
-                headers: this.getHeader()
-            })
-            return response.data;
-        }
-    
-        static async getAllCategory() {
-            const response = await axios.get(`${this.BASE_URL}/category/get-all`)
-            return response.data;
-        }
-        
-        static async getCategoryById(categoryId) {
-            const response = await axios.get(`${this.BASE_URL}/category/get-category-by-id/${categoryId}`)
-            return response.data;
-        }
+    static async createCategory(body) {
+        return this.makeRequest("post", "/category/create", body);
+    }
 
-        static async updateCategory(categoryId,body) {
-            const response = await axios.put(`${this.BASE_URL}/category/update/${categoryId}`,body,{
-                headers:this.getHeader()
-            })
-            return response.data;
-        }
+    static async getAllCategory() {
+        return this.makeRequest("get", "/category/get-all");
+    }
 
-        static async deleteCategory(categoryId) {
-            const response = await axios.delete(`${this.BASE_URL}/category/delete/${categoryId}`,{
-                headers:this.getHeader()
-            })
-            return response.data;
-        }
+    static async getCategoryById(categoryId) {
+        return this.makeRequest("get", `/category/get-category-by-id/${categoryId}`);
+    }
 
-    /*-----Order-----*/    
-        static async createOrder(body) {
-            const response = await axios.post(`${this.BASE_URL}/order/create`,body,{
-                headers:this.getHeader()
-            })
-            return response.data;
-        }
+    static async updateCategory(categoryId, body) {
+        return this.makeRequest("put", `/category/update/${categoryId}`, body);
+    }
 
-        static async getAllOrders() {
-            const response = await axios.get(`${this.BASE_URL}/order/filter`,{
-                headers:this.getHeader(),
-            })
-            return response.data;
-        }
+    static async deleteCategory(categoryId) {
+        return this.makeRequest("delete", `/category/delete/${categoryId}`);
+    }
 
-        static async getOrderItemById(itemId) {
-            const response = await axios.get(`${this.BASE_URL}/order/filter`,{
-                headers:this.getHeader(),
-                params:{itemId}
-            })
-            return response.data;
-        }
-        
-        static async getAllOrderItemsByStatus(status) {
-            const response = await axios.get(`${this.BASE_URL}/order/filter`,{
-                headers:this.getHeader(),
-                params:{status}
-            })
-            return response.data;
-        }
+    /*-----Order-----*/
+    static async createOrder(body) {
+        return this.makeRequest("post", "/order/create", body);
+    }
 
-        static async updateOrderItemsByStatus(orderItemId,status) {
-            const response = await axios.get(`${this.BASE_URL}/order/update-item-status/${orderItemId}`,{
-                headers:this.getHeader(),
-                params:{status}
-            })
-            return response.data;
-        }
+    static async getAllOrders() {
+        return this.makeRequest("get", "/order/filter");
+    }
+
+    static async getOrderItemById(itemId) {
+        return this.makeRequest("get", "/order/filter", null, { itemId });
+    }
+
+    static async getAllOrderItemsByStatus(status) {
+        return this.makeRequest("get", "/order/filter", null, { status });
+    }
+
+    static async updateOrderItemsByStatus(orderItemId, status) {
+        return this.makeRequest("put", `/order/update-item-status/${orderItemId}`, null, { status });
+    }
+
     /*-----Address-----*/
-        static async saveAddress(body) {
-            const response = await axios.post(`${this.BASE_URL}/address/save`,body,{
-                headers:this.getHeader()
-            })
-            return response.data;
-        }
+    static async saveAddress(body) {
+        return this.makeRequest("post", "/address/save", body);
+    }
 
     /*-----Authentication-----*/
-        static logout(){
-            localStorage.removeItem(`token`)
-            localStorage.removeItem(`role`)
-        }
+    static logout() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        window.location.href = "/login";
+    }
 
-        static isAuthenticated(){
-            const token=localStorage.removeItem(`token`)
-            return !!token
-        }
-        static isAdmin(){
-            const role = localStorage.getItem('role')
-            return role === 'ADMIN'
-        }
- }
+    static isAuthenticated() {
+        const token = localStorage.getItem("token");
+        return !!token;
+    }
 
-
+    static isAdmin() {
+        const role = localStorage.getItem("role");
+        return role === "ADMIN";
+    }
+}
