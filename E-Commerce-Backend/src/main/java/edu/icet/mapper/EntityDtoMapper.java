@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 @Component
 public class EntityDtoMapper {
 
-    public UserDto mapUserToDtoBasic(User user) {
+    public UserDto mapUserToDtoBasic(User user){
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setPhoneNumber(user.getPhoneNumber());
@@ -17,27 +17,32 @@ public class EntityDtoMapper {
         userDto.setRole(user.getRole().name());
         userDto.setName(user.getName());
         return userDto;
+
     }
 
-    public AddressDto mapAddressToDtoBasic(edu.icet.entity.Address address) {
+    //Address to DTO Basic
+    public AddressDto mapAddressToDtoBasic(Address address){
         AddressDto addressDto = new AddressDto();
         addressDto.setId(address.getId());
         addressDto.setCity(address.getCity());
         addressDto.setStreet(address.getStreet());
         addressDto.setState(address.getState());
         addressDto.setCountry(address.getCountry());
-        addressDto.setZipcode(address.getZipcode());
+        addressDto.setZipCode(address.getZipCode());
         return addressDto;
     }
 
-    public CategoryDto mapCategoryToDtoBasic(Category category) {
+    //Category to DTO basic
+    public CategoryDto mapCategoryToDtoBasic(Category category){
         CategoryDto categoryDto = new CategoryDto();
         categoryDto.setId(category.getId());
         categoryDto.setName(category.getName());
         return categoryDto;
     }
 
-    public OrderItemDto mapOrderItemToDtoBasic(OrderItem orderItem) {
+
+    //OrderItem to DTO Basics
+    public OrderItemDto mapOrderItemToDtoBasic(OrderItem orderItem){
         OrderItemDto orderItemDto = new OrderItemDto();
         orderItemDto.setId(orderItem.getId());
         orderItemDto.setQuantity(orderItem.getQuantity());
@@ -47,7 +52,8 @@ public class EntityDtoMapper {
         return orderItemDto;
     }
 
-    public ProductDto mapProductToDtoBasic(Product product) {
+    //Product to DTO Basic
+    public ProductDto mapProductToDtoBasic(Product product){
         ProductDto productDto = new ProductDto();
         productDto.setId(product.getId());
         productDto.setName(product.getName());
@@ -57,18 +63,24 @@ public class EntityDtoMapper {
         return productDto;
     }
 
-    public UserDto mapUserToDtoPlusAddress(User user) {
+    public UserDto mapUserToDtoPlusAddress(User user){
+
         System.out.println("mapUserToDtoPlusAddress is called");
         UserDto userDto = mapUserToDtoBasic(user);
-        if (user.getAddress() != null) {
+        if (user.getAddress() != null){
+
             AddressDto addressDto = mapAddressToDtoBasic(user.getAddress());
             userDto.setAddress(addressDto);
+
         }
         return userDto;
     }
 
-    public OrderItemDto mapOrderItemToDtoPlusProduct(OrderItem orderItem) {
+
+    //orderItem to DTO plus product
+    public OrderItemDto mapOrderItemToDtoPlusProduct(OrderItem orderItem){
         OrderItemDto orderItemDto = mapOrderItemToDtoBasic(orderItem);
+
         if (orderItem.getProduct() != null) {
             ProductDto productDto = mapProductToDtoBasic(orderItem.getProduct());
             orderItemDto.setProduct(productDto);
@@ -76,17 +88,23 @@ public class EntityDtoMapper {
         return orderItemDto;
     }
 
-    public OrderItemDto mapOrderItemToDtoPlusProductAndUser(OrderItem orderItem) {
+
+    //OrderItem to DTO plus product and user
+    public OrderItemDto mapOrderItemToDtoPlusProductAndUser(OrderItem orderItem){
         OrderItemDto orderItemDto = mapOrderItemToDtoPlusProduct(orderItem);
-        if (orderItem.getUser() != null) {
+
+        if (orderItem.getUser() != null){
             UserDto userDto = mapUserToDtoPlusAddress(orderItem.getUser());
             orderItemDto.setUser(userDto);
         }
         return orderItemDto;
     }
 
+
+    //USer to DTO with Address and Order Items History
     public UserDto mapUserToDtoPlusAddressAndOrderHistory(User user) {
         UserDto userDto = mapUserToDtoPlusAddress(user);
+
         if (user.getOrderItemList() != null && !user.getOrderItemList().isEmpty()) {
             userDto.setOrderItemList(user.getOrderItemList()
                     .stream()
@@ -94,5 +112,11 @@ public class EntityDtoMapper {
                     .collect(Collectors.toList()));
         }
         return userDto;
+
     }
+
+
+
+
+
 }

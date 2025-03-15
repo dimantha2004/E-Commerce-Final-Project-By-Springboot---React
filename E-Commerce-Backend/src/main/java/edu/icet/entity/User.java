@@ -36,11 +36,11 @@ public class User {
 
     private UserRole role;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<OrderItem>orderItemList;
-
-    @OneToOne(fetch = FetchType.LAZY,cascade =CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // Add this
     private Address address;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OrderItem> orderItemList;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt=LocalDateTime.now();

@@ -51,9 +51,9 @@ const ProfilePage = () => {
                 <p className="error-message">{error}</p>
             ) : (
                 <div>
-                    <p><strong>Name: </strong>{userInfo.name}</p>
-                    <p><strong>Email: </strong>{userInfo.email}</p>
-                    <p><strong>Phone Number: </strong>{userInfo.phoneNumber}</p>
+                    <p><strong>Name : </strong>{userInfo.name}</p>
+                    <p><strong>Email : </strong>{userInfo.email}</p>
+                    <p><strong>Phone Number : </strong>{userInfo.phoneNumber}</p>
 
                     <div>
                         <h3>Address</h3>
@@ -66,7 +66,7 @@ const ProfilePage = () => {
                                 <p><strong>Country: </strong>{userInfo.address.country}</p>
                             </div>
                         ) : (
-                            <p>No Address information available...!</p>
+                            <p>No Address information available</p>
                         )}
                         <button className="profile-button" onClick={handleAddressClick}>
                             {userInfo.address ? "Edit Address" : "Add Address"}
