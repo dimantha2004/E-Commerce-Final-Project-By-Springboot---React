@@ -23,7 +23,7 @@ public class OrderItemController {
     private final OrderItemService orderItemService;
 
     @PostMapping("/create")
-    public ResponseEntity<Response> placeOrder(@RequestBody OrderRequest orderRequest){
+    public ResponseEntity<Response> placeOrder(@RequestBody OrderRequest orderRequest) {
         return ResponseEntity.ok(orderItemService.placeOrder(orderRequest));
     }
 

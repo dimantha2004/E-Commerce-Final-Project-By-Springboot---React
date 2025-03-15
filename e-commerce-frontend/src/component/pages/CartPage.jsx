@@ -9,11 +9,13 @@ const CartPage = () => {
     const [message, setMessage] = useState(null);
     const navigate = useNavigate();
 
+
     const incrementItem = (product) => {
         dispatch({ type: 'INCREMENT_ITEM', payload: product });
     }
 
     const decrementItem = (product) => {
+
         const cartItem = cart.find(item => item.id === product.id);
         if (cartItem && cartItem.quantity > 1) {
             dispatch({ type: 'DECREMENT_ITEM', payload: product });
@@ -22,11 +24,13 @@ const CartPage = () => {
         }
     }
 
-    const totalPrice = cart.reduce((total, item) => total + (item.price || 0) * item.quantity, 0);
+    const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+
+
 
     const handleCheckout = async () => {
         if (!ApiService.isAuthenticated()) {
-            setMessage("You need to login first before you place an order...!");
+            setMessage("You need to login first before you can place an order");
             setTimeout(() => {
                 setMessage('')
                 navigate("/login")
@@ -61,8 +65,11 @@ const CartPage = () => {
             setTimeout(() => {
                 setMessage('')
             }, 3000);
+
         }
+
     };
+
 
     return (
         <div className="cart-page">
@@ -81,11 +88,11 @@ const CartPage = () => {
                                     <h2>{item.name}</h2>
                                     <p>{item.description}</p>
                                     <div className="quantity-controls">
-                                        <button onClick={() => decrementItem(item)}>-</button>
+                                        <button onClick={()=> decrementItem(item)}>-</button>
                                         <span>{item.quantity}</span>
-                                        <button onClick={() => incrementItem(item)}>+</button>
+                                        <button onClick={()=> incrementItem(item)}>+</button>
                                     </div>
-                                    <span>${item.price ? item.price.toFixed(2) : '0.00'}</span>
+                                    <span>${item.price.toFixed()}</span>
                                 </div>
                             </li>
                         ))}
