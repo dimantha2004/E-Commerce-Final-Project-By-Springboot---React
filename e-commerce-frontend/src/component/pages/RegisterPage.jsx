@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import ApiService from "../../service/ApiService";
 import '../../style/register.css'
 
-
 const RegisterPage = () => {
 
     const [formData, setFormData] = useState({
@@ -16,7 +15,6 @@ const RegisterPage = () => {
     const [message, setMessage] = useState(null);
     const navigate = useNavigate();
 
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -27,7 +25,7 @@ const RegisterPage = () => {
         try {
             const response = await ApiService.registerUser(formData);
             if (response.status === 200) {
-                setMessage("User Successfully Registerd");
+                setMessage("User Successfully Registerd...!");
                 setTimeout(() => {
                     navigate("/login")
                 }, 4000)
@@ -57,7 +55,6 @@ const RegisterPage = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required />
-
 
                 <label>Phone Number: </label>
                 <input

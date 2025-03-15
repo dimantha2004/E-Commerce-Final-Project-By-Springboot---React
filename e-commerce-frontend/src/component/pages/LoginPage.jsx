@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import ApiService from "../../service/ApiService";
 import '../../style/login.css'
 
-
 const LoginPage = () => {
 
     const [formData, setFormData] = useState({
@@ -13,7 +12,6 @@ const LoginPage = () => {
 
     const [message, setMessage] = useState(null);
     const navigate = useNavigate();
-
 
     const handleChange = (e) => {
         const { name, value } = e.target;
