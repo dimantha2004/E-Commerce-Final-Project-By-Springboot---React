@@ -40,6 +40,10 @@ export default class ApiService {
         return this.makeRequest("get", "/user/my-info");
     }
 
+    static async getAllUsers() {
+        return this.makeRequest("get", "/user/get-all");
+    }
+
     /*-----Product-----*/
     static async addProduct(formData) {
         return axios.post(

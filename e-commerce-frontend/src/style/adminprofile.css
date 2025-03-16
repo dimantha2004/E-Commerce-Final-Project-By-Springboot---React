@@ -1,0 +1,27 @@
+.profile-page {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.user-info, .admin-stats {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-info h2, .admin-stats h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.user-info p, .admin-stats p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.admin-stats p strong {
+    color: #555;
+}
