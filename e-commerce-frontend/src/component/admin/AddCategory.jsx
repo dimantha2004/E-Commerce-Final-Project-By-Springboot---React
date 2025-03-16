@@ -17,7 +17,7 @@ const AddCategory = () => {
                 setTimeout(()=>{
                     setMessage('');
                     navigate("/admin/categories")
-                }, 3000)
+                }, 1500)
             }
         } catch (error) {
             setMessage(error.response?.data?.message || error.message || "Failed to save a category")
