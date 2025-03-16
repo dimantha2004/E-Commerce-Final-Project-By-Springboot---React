@@ -4,6 +4,7 @@ import edu.icet.dto.Response;
 import edu.icet.exception.InvalidCredentialsException;
 import edu.icet.service.interfaces.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -18,15 +19,17 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @PostMapping("/create")
+    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> createProduct(
-            @RequestParam Long categoryId,
-            @RequestParam MultipartFile image,
-            @RequestParam String name,
-            @RequestParam String description,
-            @RequestParam BigDecimal price
-    ){
+            @RequestParam("categoryId") Long categoryId,
+            @RequestParam("image") MultipartFile image,
+            @RequestParam("name") String name,
+            @RequestParam("description") String description,
+            @RequestParam("price") BigDecimal price
+    ) {
+        // ... existing code
+
         if (categoryId == null || image.isEmpty() || name.isEmpty() || description.isEmpty() || price == null){
             throw new InvalidCredentialsException("All Fields are Required");
         }
