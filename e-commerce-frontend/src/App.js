@@ -37,7 +37,7 @@ import AddProductPage from './component/admin/AddProductPage';
 
 import EditProductPage from './component/admin/EditProductPage';
 
-// import AdminOrdersPage from './component/admin/AdminOrderPage';
+import AdminOrdersPage from './component/admin/AdminOrderPage';
 
 // import AdminOrderDetailsPage from './component/admin/AdminOrderDetailsPage';
 
@@ -83,9 +83,9 @@ function App() {
         
         <Route path='/admin/edit-product/:productId' element={<AdminRoute element={<EditProductPage/>} />} />
         
-        {/* <Route path='/admin/orders' element={<AdminRoute element={<AdminOrdersPage/>} />} />
+        <Route path='/admin/orders' element={<AdminRoute element={<AdminOrdersPage/>} />} />
         
-        <Route path='/admin/order-details/:itemId' element={<AdminRoute element={<AdminOrderDetailsPage/>} />} /> */}
+        {/* <Route path='/admin/order-details/:itemId' element={<AdminRoute element={<AdminOrderDetailsPage/>} />} /> */}
 
         </Routes>
       <Footer/>
