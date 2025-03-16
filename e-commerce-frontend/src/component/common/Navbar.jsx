@@ -48,7 +48,7 @@ const Navbar = () =>{
                 <NavLink to="/" >Home</NavLink>
                 <NavLink to="/categories" >Categories</NavLink>
                 {isAuthenticated && <NavLink to="/profile" >My Account</NavLink>}
-                {isAdmin && <NavLink to="/admin" >Admin</NavLink>}
+                {isAuthenticated && isAdmin && <NavLink to="/admin">Admin</NavLink>}
                 {!isAuthenticated && <NavLink to="/login" >Login</NavLink>}
                 {isAuthenticated &&<NavLink onClick={handleLogout} >Logout</NavLink>}
                 <NavLink to="/cart">Cart</NavLink>
