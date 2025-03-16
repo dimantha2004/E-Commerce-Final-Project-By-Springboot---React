@@ -27,13 +27,12 @@ const AdminProfile = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Fetch all orders
+                
                 const ordersResponse = await ApiService.getAllOrders();
                 console.log("Raw orders response:", ordersResponse);
                 const orders = ordersResponse?.orderItemList || [];
                 console.log("Processed orders:", orders);
 
-                // Calculate order statistics
                 const stats = {
                     totalOrders: orders.length,
                     pendingOrders: orders.filter(order => order.status === "PENDING").length,
@@ -43,7 +42,6 @@ const AdminProfile = () => {
                 };
                 setOrderStats(stats);
 
-                // Calculate revenue metrics
                 const totalRevenue = orders.reduce((sum, order) => {
                     return sum + (Number(order.price) * Number(order.quantity));
                 }, 0);
@@ -57,7 +55,6 @@ const AdminProfile = () => {
                     averageOrderValue
                 });
 
-                // Fetch product statistics
                 const productsResponse = await ApiService.getAllProducts();
                 console.log("Raw products response:", productsResponse);
                 const products = productsResponse?.productList || [];
@@ -70,7 +67,6 @@ const AdminProfile = () => {
                 };
                 setProductStats(productStats);
 
-                // Get recent orders
                 const recentOrders = orders
                     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                     .slice(0, 5);
@@ -88,7 +84,6 @@ const AdminProfile = () => {
         <div className="admin-profile-page">
             <h1>Admin Profile</h1>
 
-            {/* Order Statistics */}
             <div className="stats-section">
                 <h2>Order Statistics</h2>
                 <div>Total Orders: {orderStats.totalOrders}</div>
@@ -98,14 +93,12 @@ const AdminProfile = () => {
                 <div>Cancelled Orders: {orderStats.cancelledOrders}</div>
             </div>
 
-            {/* Revenue Metrics */}
             <div className="stats-section">
                 <h2>Revenue Metrics</h2>
                 <div>Total Revenue: LKR {revenueMetrics.totalRevenue.toLocaleString()}</div>
                 <div>Average Order Value: LKR {revenueMetrics.averageOrderValue.toLocaleString()}</div>
             </div>
 
-            {/* Product Statistics */}
             <div className="stats-section">
                 <h2>Product Statistics</h2>
                 <div>Total Products: {productStats.totalProducts}</div>
@@ -120,7 +113,6 @@ const AdminProfile = () => {
                 <div>Out of Stock Products: {productStats.outOfStockProducts}</div>
             </div>
 
-            {/* Recent Orders */}
             <div className="stats-section">
                 <h2>Recent Orders</h2>
                 <table>
