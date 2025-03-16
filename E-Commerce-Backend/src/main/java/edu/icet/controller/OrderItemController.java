@@ -41,18 +41,20 @@ public class OrderItemController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> filterOrderItems(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)LocalDateTime endDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
             @RequestParam(required = false) String status,
             @RequestParam(required = false) Long itemId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "1000") int size
-
-    ){
+    ) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
         OrderStatus orderStatus = status != null ? OrderStatus.valueOf(status.toUpperCase()) : null;
 
-        return ResponseEntity.ok(orderItemService.filterOrderItems(orderStatus, startDate, endDate, itemId, pageable));
+        // Fetch order items
+        Response response = orderItemService.filterOrderItems(orderStatus, startDate, endDate, itemId, pageable);
 
+        // Ensure the response contains the required data
+        return ResponseEntity.ok(response);
     }
 }
 

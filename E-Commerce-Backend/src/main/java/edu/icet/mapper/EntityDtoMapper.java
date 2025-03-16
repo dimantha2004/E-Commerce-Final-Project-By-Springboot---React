@@ -77,14 +77,17 @@ public class EntityDtoMapper {
     }
 
 
-    //orderItem to DTO plus product
-    public OrderItemDto mapOrderItemToDtoPlusProduct(OrderItem orderItem){
+    public OrderItemDto mapOrderItemToDtoPlusProduct(OrderItem orderItem) {
         OrderItemDto orderItemDto = mapOrderItemToDtoBasic(orderItem);
 
         if (orderItem.getProduct() != null) {
             ProductDto productDto = mapProductToDtoBasic(orderItem.getProduct());
             orderItemDto.setProduct(productDto);
         }
+
+        // Explicitly set user to null or exclude it
+        orderItemDto.setUser(null); // Break the circular reference
+
         return orderItemDto;
     }
 
@@ -108,11 +111,10 @@ public class EntityDtoMapper {
         if (user.getOrderItemList() != null && !user.getOrderItemList().isEmpty()) {
             userDto.setOrderItemList(user.getOrderItemList()
                     .stream()
-                    .map(this::mapOrderItemToDtoPlusProduct)
+                    .map(this::mapOrderItemToDtoPlusProduct) // Use the updated method
                     .collect(Collectors.toList()));
         }
         return userDto;
-
     }
 
 

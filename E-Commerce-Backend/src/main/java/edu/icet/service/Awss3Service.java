@@ -58,7 +58,7 @@ public class Awss3Service {
             s3Client.putObject(putObjectRequest);
 
             // Return the URL of the uploaded image
-            return "https://" + bucketName + ".s3.eu-north-1.amazonaws.com/" + s3FileName;
+            return "https://" + bucketName + "s3.eu-north-1.amazonaws.com/" + s3FileName;
 
         } catch (IOException e) {
             log.error("Unable to upload image to S3 bucket: {}", e.getMessage(), e);

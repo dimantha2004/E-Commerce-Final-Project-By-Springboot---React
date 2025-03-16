@@ -1,84 +1,138 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import ApiService from "../../service/ApiService";
-import '../../style/adminprofile.css';
+import "../../style/adminprofile.css";
 
 const AdminProfile = () => {
-    const [userInfo, setUserInfo] = useState(null);
     const [orderStats, setOrderStats] = useState({
         totalOrders: 0,
-        confirmed: 0,
-        shipped: 0,
-        delivered: 0,
-        pending: 0,
-        returned: 0,
-        cancelled: 0,
+        pendingOrders: 0,
+        confirmedOrders: 0,
+        shippedOrders: 0,
+        cancelledOrders: 0
     });
-    const [productCount, setProductCount] = useState(0);
-    const [customerCount, setCustomerCount] = useState(0);
-    const navigate = useNavigate();
+
+    const [revenueMetrics, setRevenueMetrics] = useState({
+        totalRevenue: 0,
+        averageOrderValue: 0
+    });
+
+    const [productStats, setProductStats] = useState({
+        totalProducts: 0,
+        topSellingProducts: [],
+        outOfStockProducts: 0
+    });
+
+    const [recentOrders, setRecentOrders] = useState([]);
 
     useEffect(() => {
-        fetchProfileData();
+        const fetchData = async () => {
+            try {
+                // Fetch all orders
+                const ordersResponse = await ApiService.getAllOrders();
+                const orders = ordersResponse?.data?.orderItemList || [];
+                
+                // Calculate order statistics
+                const stats = {
+                    totalOrders: orders.length,
+                    pendingOrders: orders.filter(order => order.status === "PENDING").length,
+                    confirmedOrders: orders.filter(order => order.status === "CONFIRMED").length,
+                    shippedOrders: orders.filter(order => order.status === "SHIPPED").length,
+                    cancelledOrders: orders.filter(order => order.status === "CANCELLED").length
+                };
+                setOrderStats(stats);
+
+                // Calculate revenue metrics
+                const totalRevenue = orders.reduce((sum, order) => sum + (order.price * order.quantity), 0);
+                const averageOrderValue = orders.length > 0 ? totalRevenue / orders.length : 0;
+                setRevenueMetrics({
+                    totalRevenue,
+                    averageOrderValue
+                });
+
+                // Fetch product statistics
+                const productsResponse = await ApiService.getAllProducts();
+                const products = productsResponse?.data?.productList || [];
+                
+                const productStats = {
+                    totalProducts: products.length,
+                    topSellingProducts: products.slice(0, 3), // Show top 3 products
+                    outOfStockProducts: products.filter(product => product.stock === 0).length
+                };
+                setProductStats(productStats);
+
+                // Get recent orders (already sorted by date from API)
+                const recentOrders = orders.slice(0, 5); 
+                setRecentOrders(recentOrders);
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
     }, []);
 
-    const fetchProfileData = async () => {
-        try {
-            // Fetch user info
-            const userResponse = await ApiService.getLoggedInUserInfo();
-            setUserInfo(userResponse.user);
-
-            // Fetch order statistics
-            const ordersResponse = await ApiService.getAllOrders();
-            const orders = ordersResponse.orderList || [];
-
-            const stats = {
-                totalOrders: orders.length,
-                confirmed: orders.filter(order => order.status === "CONFIRMED").length,
-                shipped: orders.filter(order => order.status === "SHIPPED").length,
-                delivered: orders.filter(order => order.status === "DELIVERED").length,
-                pending: orders.filter(order => order.status === "PENDING").length,
-                returned: orders.filter(order => order.status === "RETURNED").length,
-                cancelled: orders.filter(order => order.status === "CANCELLED").length,
-            };
-            setOrderStats(stats);
-
-            // Fetch product count
-            const productsResponse = await ApiService.getAllProducts();
-            setProductCount(productsResponse.productList?.length || 0);
-
-            // Fetch customer count (assuming you have a method to get all users)
-            const usersResponse = await ApiService.getAllUsers();
-            setCustomerCount(usersResponse.userList?.length || 0);
-
-        } catch (error) {
-            console.error("Error fetching profile data:", error);
-        }
-    };
-
     return (
-        <div className="admin-profile">
+        <div className="admin-profile-page">
             <h1>Admin Profile</h1>
-            {userInfo && (
-                <div className="user-info">
-                    <h2>User Information</h2>
-                    <p><strong>Name:</strong> {userInfo.name}</p>
-                    <p><strong>Email:</strong> {userInfo.email}</p>
-                    <p><strong>Role:</strong> {userInfo.role}</p>
-                </div>
-            )}
 
-            <div className="admin-stats">
-                <h2>Admin Statistics</h2>
-                <p><strong>Total Products:</strong> {productCount}</p>
-                <p><strong>Total Customers:</strong> {customerCount}</p>
-                <p><strong>Total Orders:</strong> {orderStats.totalOrders}</p>
-                <p><strong>Confirmed Orders:</strong> {orderStats.confirmed}</p>
-                <p><strong>Shipped Orders:</strong> {orderStats.shipped}</p>
-                <p><strong>Delivered Orders:</strong> {orderStats.delivered}</p>
-                <p><strong>Pending Orders:</strong> {orderStats.pending}</p>
-                <p><strong>Returned Orders:</strong> {orderStats.returned}</p>
-                <p><strong>Cancelled Orders:</strong> {orderStats.cancelled}</p>
+            {/* Order Statistics */}
+            <div className="stats-section">
+                <h2>Order Statistics</h2>
+                <div>Total Orders: {orderStats.totalOrders}</div>
+                <div>Pending Orders: {orderStats.pendingOrders}</div>
+                <div>Confirmed Orders: {orderStats.confirmedOrders}</div>
+                <div>Shipped Orders: {orderStats.shippedOrders}</div>
+                <div>Cancelled Orders: {orderStats.cancelledOrders}</div>
+            </div>
+
+            {/* Revenue Metrics */}
+            <div className="stats-section">
+                <h2>Revenue Metrics</h2>
+                <div>Total Revenue: LKR {revenueMetrics.totalRevenue.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
+                <div>Average Order Value: LKR {revenueMetrics.averageOrderValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
+            </div>
+
+            {/* Product Statistics */}
+            <div className="stats-section">
+                <h2>Product Statistics</h2>
+                <div>Total Products: {productStats.totalProducts}</div>
+                <div>Top Selling Products:</div>
+                <ul>
+                    {productStats.topSellingProducts.map(product => (
+                        <li key={product.id}>
+                            {product.name} - LKR {product.price.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                        </li>
+                    ))}
+                </ul>
+                <div>Out of Stock Products: {productStats.outOfStockProducts}</div>
+            </div>
+
+            {/* Recent Orders */}
+            <div className="stats-section">
+                <h2>Recent Orders</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {recentOrders.map(order => (
+                            <tr key={order.id}>
+                                <td>{order.id}</td>
+                                <td>{order.product?.name || "N/A"}</td>
+                                <td>{order.quantity}</td>
+                                <td>LKR {(order.price * order.quantity).toLocaleString(undefined, { maximumFractionDigits: 2 })}</td>
+                                <td>{order.status}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );
