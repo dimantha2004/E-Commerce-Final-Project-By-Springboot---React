@@ -29,8 +29,10 @@ const AdminProfile = () => {
             try {
                 // Fetch all orders
                 const ordersResponse = await ApiService.getAllOrders();
-                const orders = ordersResponse?.data?.orderItemList || [];
-                
+                console.log("Raw orders response:", ordersResponse);
+                const orders = ordersResponse?.orderItemList || [];
+                console.log("Processed orders:", orders);
+
                 // Calculate order statistics
                 const stats = {
                     totalOrders: orders.length,
@@ -42,8 +44,14 @@ const AdminProfile = () => {
                 setOrderStats(stats);
 
                 // Calculate revenue metrics
-                const totalRevenue = orders.reduce((sum, order) => sum + (order.price * order.quantity), 0);
-                const averageOrderValue = orders.length > 0 ? totalRevenue / orders.length : 0;
+                const totalRevenue = orders.reduce((sum, order) => {
+                    return sum + (Number(order.price) * Number(order.quantity));
+                }, 0);
+                
+                const averageOrderValue = orders.length > 0 
+                    ? totalRevenue / orders.length 
+                    : 0;
+                
                 setRevenueMetrics({
                     totalRevenue,
                     averageOrderValue
@@ -51,17 +59,21 @@ const AdminProfile = () => {
 
                 // Fetch product statistics
                 const productsResponse = await ApiService.getAllProducts();
-                const products = productsResponse?.data?.productList || [];
-                
+                console.log("Raw products response:", productsResponse);
+                const products = productsResponse?.productList || [];
+                console.log("Processed products:", products);
+
                 const productStats = {
                     totalProducts: products.length,
-                    topSellingProducts: products.slice(0, 3), // Show top 3 products
-                    outOfStockProducts: products.filter(product => product.stock === 0).length
+                    topSellingProducts: products.slice(0, 3),
+                    outOfStockProducts: products.filter(p => p.stock === 0).length
                 };
                 setProductStats(productStats);
 
-                // Get recent orders (already sorted by date from API)
-                const recentOrders = orders.slice(0, 5); 
+                // Get recent orders
+                const recentOrders = orders
+                    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                    .slice(0, 5);
                 setRecentOrders(recentOrders);
 
             } catch (error) {
@@ -89,8 +101,8 @@ const AdminProfile = () => {
             {/* Revenue Metrics */}
             <div className="stats-section">
                 <h2>Revenue Metrics</h2>
-                <div>Total Revenue: LKR {revenueMetrics.totalRevenue.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
-                <div>Average Order Value: LKR {revenueMetrics.averageOrderValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
+                <div>Total Revenue: LKR {revenueMetrics.totalRevenue.toLocaleString()}</div>
+                <div>Average Order Value: LKR {revenueMetrics.averageOrderValue.toLocaleString()}</div>
             </div>
 
             {/* Product Statistics */}
@@ -101,7 +113,7 @@ const AdminProfile = () => {
                 <ul>
                     {productStats.topSellingProducts.map(product => (
                         <li key={product.id}>
-                            {product.name} - LKR {product.price.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                            {product.name} - LKR {product.price?.toLocaleString() || 'N/A'}
                         </li>
                     ))}
                 </ul>
@@ -116,7 +128,7 @@ const AdminProfile = () => {
                         <tr>
                             <th>Order ID</th>
                             <th>Product</th>
-                            <th>Quantity</th>
+                            <th>Qty</th>
                             <th>Total</th>
                             <th>Status</th>
                         </tr>
@@ -125,9 +137,9 @@ const AdminProfile = () => {
                         {recentOrders.map(order => (
                             <tr key={order.id}>
                                 <td>{order.id}</td>
-                                <td>{order.product?.name || "N/A"}</td>
+                                <td>{order.product?.name || 'N/A'}</td>
                                 <td>{order.quantity}</td>
-                                <td>LKR {(order.price * order.quantity).toLocaleString(undefined, { maximumFractionDigits: 2 })}</td>
+                                <td>LKR {(order.price * order.quantity).toLocaleString()}</td>
                                 <td>{order.status}</td>
                             </tr>
                         ))}
