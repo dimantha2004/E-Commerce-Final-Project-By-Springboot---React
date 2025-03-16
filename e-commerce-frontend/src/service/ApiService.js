@@ -55,12 +55,16 @@ export default class ApiService {
     }
 
     static async updateProduct(productId, formData) {
-        return this.makeRequest("put", `/product/update/${productId}`, formData, {
-            headers: {
-                ...this.getHeader(),
-                "Content-Type": "multipart/form-data"
+        return axios.put(
+            `${this.BASE_URL}/product/update/${productId}`,
+            formData,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "multipart/form-data"
+                }
             }
-        });
+        );
     }
 
     static async getAllProducts(page = 0, size = 10) {

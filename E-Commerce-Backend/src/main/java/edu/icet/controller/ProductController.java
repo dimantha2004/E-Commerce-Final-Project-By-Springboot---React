@@ -28,25 +28,30 @@ public class ProductController {
             @RequestParam("description") String description,
             @RequestParam("price") BigDecimal price
     ) {
-        // ... existing code
-
         if (categoryId == null || image.isEmpty() || name.isEmpty() || description.isEmpty() || price == null){
             throw new InvalidCredentialsException("All Fields are Required");
         }
         return ResponseEntity.ok(productService.createProduct(categoryId, image, name, description, price));
     }
 
-    @PutMapping("/update")
+    @PutMapping(value = "/update/{productId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> updateProduct(
-            @RequestParam Long productId,
+            @PathVariable Long productId,
             @RequestParam(required = false) Long categoryId,
-            @RequestParam(required = false)  MultipartFile image,
-            @RequestParam(required = false)  String name,
-            @RequestParam(required = false)  String description,
-            @RequestParam(required = false)  BigDecimal price
-    ){
-        return ResponseEntity.ok(productService.updateProduct(productId, categoryId, image, name, description, price));
+            @RequestParam(required = false) MultipartFile image,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) BigDecimal price
+    ) {
+        return ResponseEntity.ok(productService.updateProduct(
+                productId,
+                categoryId,
+                image,
+                name,
+                description,
+                price
+        ));
     }
 
 
