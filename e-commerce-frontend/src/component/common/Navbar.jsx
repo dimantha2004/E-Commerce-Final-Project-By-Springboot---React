@@ -3,35 +3,39 @@ import '../../style/navbar.css';
 import { NavLink, useNavigate } from "react-router-dom";
 import ApiService from "../../service/ApiService";
 
-const Navbar=()=>{
-    const [searchValue,setSearchValue]=useState("");
-    const navigate=useNavigate();
+const Navbar = () =>{
 
-    const isAdmin=ApiService.isAdmin();
-    const isAuthenticated=ApiService.isAuthenticated();
+    const [searchValue, setSearchValue] = useState("");
+    const navigate = useNavigate();
 
-    const handleSearchChange=(e)=>{
+    const isAdmin = ApiService.isAdmin();
+    const isAuthenticated = ApiService.isAuthenticated();
+
+    const handleSearchChange =(e) => {
         setSearchValue(e.target.value);
     }
-    const  handleSearchSubmit=async(e)=>{
+
+    const handleSearchSubmit = async (e) =>{
         e.preventDefault();
         navigate(`/?search=${searchValue}`)
     }
-    const handleLogout=()=>{
-        const confirm=window.confirm("Do you want to log out...?");
+
+    const handleLogout = () => {
+        const confirm = window.confirm("Are you sure you want to logout? ");
         if(confirm){
             ApiService.logout();
             setTimeout(()=>{
-                navigate(`/login`)
-            },500);
+                navigate('/login')
+            }, 500);
         }
     }
+
     return(
         <nav className="navbar">
             <div className="navbar-brand">
-                <NavLink to="/" > <img src="./ecomlogo.png" alt="Online Shopping" /></NavLink>
+                <NavLink to="/" > <img src="./phegon_mart.png" alt="Phegon Mart" /></NavLink>
             </div>
-           
+            {/* SEARCH FORM */}
             <form className="navbar-search" onSubmit={handleSearchSubmit}>
                 <input type="text" 
                 placeholder="Search products" 
