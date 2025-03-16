@@ -29,8 +29,12 @@ public class OrderItemController {
 
     @PutMapping("/update-item-status/{orderItemId}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Response> updateOrderItemStatus(@PathVariable Long orderItemId,  @RequestParam String status){
+    public ResponseEntity<Response> updateOrderItemsByStatus(
+            @PathVariable Long orderItemId,
+            @RequestParam String status
+    ) {
         return ResponseEntity.ok(orderItemService.updateOrderItemStatus(orderItemId, status));
+
     }
 
     @GetMapping("/filter")

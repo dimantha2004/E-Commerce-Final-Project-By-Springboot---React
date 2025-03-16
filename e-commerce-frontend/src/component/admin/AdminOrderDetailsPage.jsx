@@ -32,7 +32,7 @@ const AdminOrderDetailsPage = () => {
 
     const handleSubmitStatusChange = async (orderItemId) => {
         try {
-            await ApiService.updateOrderitemStatus(orderItemId, selectedStatus[orderItemId]);
+            await ApiService.updateOrderItemsByStatus(orderItemId, selectedStatus[orderItemId]);
             setMessage('order item status was successfully updated')
             setTimeout(() => {
                 setMessage('');
