@@ -55,14 +55,13 @@ const AdminProfile = () => {
         ]
     };
 
-    // Data for pie chart (revenue distribution)
     const pieChartData = {
         labels: ["Pending", "Confirmed", "Shipped", "Cancelled"],
         datasets: [
             {
                 label: "Revenue Distribution",
                 data: [
-                    orderStats.pendingOrders * 100, // Example calculation
+                    orderStats.pendingOrders * 100, 
                     orderStats.confirmedOrders * 200,
                     orderStats.shippedOrders * 150,
                     orderStats.cancelledOrders * 50

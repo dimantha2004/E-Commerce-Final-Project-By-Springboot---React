@@ -2,39 +2,44 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem;
+    padding: 3rem 2rem;
     background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
     min-height: 100vh;
     font-family: 'Arial', sans-serif;
+    color: #333;
+    box-sizing: border-box;
 }
 
 .admin-orders-page h2 {
-    font-size: 2rem;
+    font-size: 2.4rem;
     color: #333;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     text-align: center;
-    animation: fadeIn 0.5s ease-in-out;
+    animation: fadeIn 0.7s ease-in-out;
+    font-weight: 600;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 }
 
 .error-message {
     text-align: center;
-    margin-bottom: 1.5rem;
-    padding: 0.8rem;
-    border-radius: 8px;
-    font-size: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 1.1rem;
     background-color: #ffe3e3;
     color: #e74c3c;
     animation: slideIn 0.5s ease-in-out;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .filter-container {
     display: flex;
     justify-content: space-between;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    gap: 2rem;
+    margin-bottom: 2rem;
     width: 100%;
-    max-width: 800px;
-    animation: fadeIn 0.5s ease-in-out;
+    max-width: 900px;
+    animation: fadeIn 0.7s ease-in-out;
 }
 
 .statusFilter,
@@ -53,11 +58,12 @@
 .statusFilter select,
 .searchStatus select {
     width: 100%;
-    padding: 0.8rem;
+    padding: 1rem;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 1rem;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
 }
 
 .statusFilter select:focus,
@@ -73,14 +79,15 @@
     border-collapse: collapse;
     background: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1.5rem;
-    animation: fadeIn 0.5s ease-in-out;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    animation: fadeIn 0.7s ease-in-out;
 }
 
 .orders-table thead {
     background-color: #6c63ff;
     color: #fff;
+    text-align: center;
 }
 
 .orders-table th,
@@ -95,27 +102,29 @@
 }
 
 .orders-table tbody tr {
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .orders-table tbody tr:hover {
     background-color: #f9f9f9;
+    transform: translateY(-3px);
 }
 
 .orders-table tbody td {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #555;
 }
 
 .orders-table tbody td button {
-    padding: 0.5rem 1rem;
+    padding: 0.7rem 1.2rem;
     background-color: #6c63ff;
     color: #fff;
     border: none;
     border-radius: 6px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-weight: 500;
 }
 
 .orders-table tbody td button:hover {
@@ -130,7 +139,7 @@
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(-30px);
     }
     to {
         opacity: 1;
@@ -141,7 +150,7 @@
 @keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateX(-20px);
+        transform: translateX(-30px);
     }
     to {
         opacity: 1;
