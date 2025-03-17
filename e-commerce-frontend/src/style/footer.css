@@ -1,10 +1,30 @@
+/* Ensure the footer is always at the bottom of the page */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* Ensures the main content takes up the remaining space */
+}
+
 .footer {
     width: 100%;
-    background-color: #333;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
     color: #fff;
     text-align: center;
-    padding: 20px 0;
-    margin-top: auto;
+    padding: 30px 0;
+    margin-top: auto; /* Ensures the footer sticks to the bottom */
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .footer-links ul {
@@ -14,16 +34,53 @@
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .footer-links a {
     text-decoration: none;
-    color: white;
-    font-weight: bold;
-    margin: 0 15px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #f68b1e;
+    transform: translateY(-2px);
 }
 
 .footer-info p {
-    color: white;
-    margin: 0 0;
+    color: #fff;
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.footer-info p a {
+    color: #f68b1e;
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
+}
+
+.footer-info p a:hover {
+    opacity: 0.9;
+}
+
+/* Optional: Add a subtle animation to the footer */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.footer {
+    animation: fadeInUp 0.6s ease-out;
 }

@@ -1,19 +1,23 @@
-.category-list{
+.category-list {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 80px rgba(0, 9, 9, 0.01);
+    padding: 30px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: fadeIn 0.6s ease-out;
 }
 
-.category-list h2{
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
+.category-list h2 {
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+    color: #2c3e50;
+    font-weight: 700;
     text-align: center;
 }
 
-.category-list ul{
+.category-list ul {
     list-style-type: none;
     padding: 0;
     display: flex;
@@ -22,25 +26,66 @@
     justify-content: center;
 }
 
-.category-list li{
-    flex:  1 1 calc(33.33% - 20px);
+.category-list li {
+    flex: 1 1 calc(33.33% - 20px);
     max-width: calc(33.33% - 20px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.category-list button{
+
+.category-list li:hover {
+    transform: translateY(-5px);
+}
+
+.category-list button {
     width: 100%;
     padding: 15px;
     font-size: 1.2rem;
-    background-color: #f68b1e;
+    background: linear-gradient(135deg, #f68b1e, #ff9f43);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3 ease;
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(246, 139, 30, 0.3);
 }
 
-.error-message{
-    color: red;
+.category-list button:hover {
+    background: linear-gradient(135deg, #ff9f43, #f68b1e);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(246, 139, 30, 0.4);
+}
+
+.category-list button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(246, 139, 30, 0.3);
+}
+
+.error-message {
+    color: #e74c3c;
     text-align: center;
     font-size: 1.2em;
     margin-top: 20px;
+    font-weight: 600;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Optional: Add a subtle background pattern or gradient to the page */
+body {
+    background: linear-gradient(135deg, #f4f7f6, #e0e5ec);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

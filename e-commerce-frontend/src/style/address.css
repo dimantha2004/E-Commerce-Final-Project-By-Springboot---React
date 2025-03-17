@@ -1,48 +1,101 @@
-.address-page{
+.address-page {
     max-width: 600px;
     margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 1 0 10p rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: fadeIn 0.6s ease-out;
 }
 
-.address-page h2{
+.address-page h2 {
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
+    margin-bottom: 25px;
+    font-size: 28px;
+    color: #2c3e50;
+    font-weight: 700;
 }
-.address-page form{
+
+.address-page form {
     display: flex;
     flex-direction: column;
+    gap: 15px;
 }
-.address-page label{
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-.address-page input{
-    padding: 8px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+
+.address-page label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #34495e;
     font-size: 16px;
-    width: 99%;
 }
-.address-page button{
-    padding: 10px 20px;
-    background-color: #f68b1e;
+
+.address-page input {
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.address-page input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+}
+
+.address-page button {
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #f68b1e, #ff9f43);
     color: white;
-    border-radius: 4px;
+    border-radius: 8px;
     border: none;
     cursor: pointer;
     font-size: 16px;
-}
-.address-page button:hover{
-    background-color: #8c4d0e;
+    font-weight: 600;
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(246, 139, 30, 0.3);
 }
 
-.error-message{
-    color: red;
+.address-page button:hover {
+    background: linear-gradient(135deg, #ff9f43, #f68b1e);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(246, 139, 30, 0.4);
+}
+
+.address-page button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(246, 139, 30, 0.3);
+}
+
+.error-message {
+    color: #e74c3c;
     margin-bottom: 20px;
     text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Optional: Add a subtle background pattern or gradient to the page */
+body {
+    background: linear-gradient(135deg, #f4f7f6, #e0e5ec);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

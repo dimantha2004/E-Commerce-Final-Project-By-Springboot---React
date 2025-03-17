@@ -1,42 +1,111 @@
-.order-details-page{
-    padding: 20px;
+.order-details-page {
+    padding: 30px;
     width: 50%;
     margin: auto;
     margin-bottom: 100px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: fadeIn 0.6s ease-out;
 }
-.order-details-page h2{
+
+.order-details-page h2 {
     text-align: center;
     font-weight: 700;
+    font-size: 28px;
+    color: #2c3e50;
+    margin-bottom: 25px;
 }
-.message{
+
+.message {
     text-align: center;
     margin-bottom: 20px;
+    font-size: 16px;
+    color: #555;
 }
-.order-item-details{
+
+.order-item-details {
     border: 1px solid #ddd;
-    padding: 20px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.order-item-details:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.info, .status-change {
     margin-bottom: 20px;
 }
 
-.info, .status-change{
-    margin-bottom: 20px;
+.info p {
+    margin: 8px 0;
+    font-size: 16px;
+    color: #444;
 }
-.info p{
-    margin: 5px 0;
+
+.status-option {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.status-option{
-    padding: 10px;
+
+.status-option:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
 }
-.update-status-button{
-    background-color: #f68b1e;
+
+.update-status-button {
+    background: linear-gradient(135deg, #f68b1e, #ff9f43);
     color: #fff;
     margin-left: 10px;
-    padding: 10px;
+    padding: 12px 20px;
     font-weight: 800;
-    font-size: 15px;
+    font-size: 16px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(246, 139, 30, 0.3);
 }
-.update-status-button:hover{
-    background-color: #b77029;
+
+.update-status-button:hover {
+    background: linear-gradient(135deg, #ff9f43, #f68b1e);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(246, 139, 30, 0.4);
+}
+
+.update-status-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(246, 139, 30, 0.3);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Optional: Add a subtle background pattern or gradient to the page */
+body {
+    background: linear-gradient(135deg, #f4f7f6, #e0e5ec);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

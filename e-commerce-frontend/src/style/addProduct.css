@@ -4,32 +4,88 @@
     width: 50%;
     margin: auto;
     margin-bottom: 250px;
+    padding: 30px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: fadeIn 0.6s ease-out;
 }
 
 .product-form input,
 .product-form select,
-.product-form textarea,
-.product-form button {
-    margin: 10x 0;
-    padding: 10px;
+.product-form textarea {
+    margin: 10px 0;
+    padding: 12px;
     font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-form input:focus,
+.product-form select:focus,
+.product-form textarea:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
 }
 
 .product-form button {
-    background-color: #f68b1e;
+    background: linear-gradient(135deg, #f68b1e, #ff9f43);
     padding: 15px;
     border: none;
     cursor: pointer;
     color: #fff;
     font-weight: 800;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(246, 139, 30, 0.3);
 }
 
 .product-form button:hover {
-    background-color: #b46d26;
+    background: linear-gradient(135deg, #ff9f43, #f68b1e);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(246, 139, 30, 0.4);
+}
 
+.product-form button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(246, 139, 30, 0.3);
 }
 
 .product-form img {
     max-width: 100px;
     margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-form img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Optional: Add a subtle background pattern or gradient to the page */
+body {
+    background: linear-gradient(135deg, #f4f7f6, #e0e5ec);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
