@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ApiService from "../../service/ApiService";
 import "../../style/adminprofile.css";
+import BarChart from "../common/barchart"; 
+import PieChart from "../common/piechart"; 
 
 const AdminProfile = () => {
     const [orderStats, setOrderStats] = useState({
@@ -24,15 +26,74 @@ const AdminProfile = () => {
 
     const [recentOrders, setRecentOrders] = useState([]);
 
+    // Data for bar chart (order statistics)
+    const barChartData = {
+        labels: ["Pending", "Confirmed", "Shipped", "Cancelled"],
+        datasets: [
+            {
+                label: "Number of Orders",
+                data: [
+                    orderStats.pendingOrders,
+                    orderStats.confirmedOrders,
+                    orderStats.shippedOrders,
+                    orderStats.cancelledOrders
+                ],
+                backgroundColor: [
+                    "rgba(255, 99, 132, 0.6)",
+                    "rgba(54, 162, 235, 0.6)",
+                    "rgba(75, 192, 192, 0.6)",
+                    "rgba(255, 206, 86, 0.6)"
+                ],
+                borderColor: [
+                    "rgba(255, 99, 132, 1)",
+                    "rgba(54, 162, 235, 1)",
+                    "rgba(75, 192, 192, 1)",
+                    "rgba(255, 206, 86, 1)"
+                ],
+                borderWidth: 1
+            }
+        ]
+    };
+
+    // Data for pie chart (revenue distribution)
+    const pieChartData = {
+        labels: ["Pending", "Confirmed", "Shipped", "Cancelled"],
+        datasets: [
+            {
+                label: "Revenue Distribution",
+                data: [
+                    orderStats.pendingOrders * 100, // Example calculation
+                    orderStats.confirmedOrders * 200,
+                    orderStats.shippedOrders * 150,
+                    orderStats.cancelledOrders * 50
+                ],
+                backgroundColor: [
+                    "rgba(255, 99, 132, 0.6)",
+                    "rgba(54, 162, 235, 0.6)",
+                    "rgba(75, 192, 192, 0.6)",
+                    "rgba(255, 206, 86, 0.6)"
+                ],
+                borderColor: [
+                    "rgba(255, 99, 132, 1)",
+                    "rgba(54, 162, 235, 1)",
+                    "rgba(75, 192, 192, 1)",
+                    "rgba(255, 206, 86, 1)"
+                ],
+                borderWidth: 1
+            }
+        ]
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                
+                // Fetch all orders
                 const ordersResponse = await ApiService.getAllOrders();
                 console.log("Raw orders response:", ordersResponse);
                 const orders = ordersResponse?.orderItemList || [];
                 console.log("Processed orders:", orders);
 
+                // Calculate order statistics
                 const stats = {
                     totalOrders: orders.length,
                     pendingOrders: orders.filter(order => order.status === "PENDING").length,
@@ -42,6 +103,7 @@ const AdminProfile = () => {
                 };
                 setOrderStats(stats);
 
+                // Calculate revenue metrics
                 const totalRevenue = orders.reduce((sum, order) => {
                     return sum + (Number(order.price) * Number(order.quantity));
                 }, 0);
@@ -55,6 +117,7 @@ const AdminProfile = () => {
                     averageOrderValue
                 });
 
+                // Fetch product statistics
                 const productsResponse = await ApiService.getAllProducts();
                 console.log("Raw products response:", productsResponse);
                 const products = productsResponse?.productList || [];
@@ -67,6 +130,7 @@ const AdminProfile = () => {
                 };
                 setProductStats(productStats);
 
+                // Get recent orders
                 const recentOrders = orders
                     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                     .slice(0, 5);
@@ -84,6 +148,7 @@ const AdminProfile = () => {
         <div className="admin-profile-page">
             <h1>Admin Profile</h1>
 
+            {/* Order Statistics */}
             <div className="stats-section">
                 <h2>Order Statistics</h2>
                 <div>Total Orders: {orderStats.totalOrders}</div>
@@ -93,12 +158,54 @@ const AdminProfile = () => {
                 <div>Cancelled Orders: {orderStats.cancelledOrders}</div>
             </div>
 
+            {/* Bar Chart for Order Statistics */}
+            <div className="chart-section">
+                <h2>Order Statistics (Bar Chart)</h2>
+                <BarChart
+                    data={barChartData}
+                    options={{
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: "top"
+                            },
+                            title: {
+                                display: true,
+                                text: "Order Status Distribution"
+                            }
+                        }
+                    }}
+                />
+            </div>
+
+            {/* Revenue Metrics */}
             <div className="stats-section">
                 <h2>Revenue Metrics</h2>
                 <div>Total Revenue: LKR {revenueMetrics.totalRevenue.toLocaleString()}</div>
                 <div>Average Order Value: LKR {revenueMetrics.averageOrderValue.toLocaleString()}</div>
             </div>
 
+            {/* Pie Chart for Revenue Distribution */}
+            <div className="chart-section">
+                <h2>Revenue Distribution (Pie Chart)</h2>
+                <PieChart
+                    data={pieChartData}
+                    options={{
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: "top"
+                            },
+                            title: {
+                                display: true,
+                                text: "Revenue Distribution by Status"
+                            }
+                        }
+                    }}
+                />
+            </div>
+
+            {/* Product Statistics */}
             <div className="stats-section">
                 <h2>Product Statistics</h2>
                 <div>Total Products: {productStats.totalProducts}</div>
@@ -113,6 +220,7 @@ const AdminProfile = () => {
                 <div>Out of Stock Products: {productStats.outOfStockProducts}</div>
             </div>
 
+            {/* Recent Orders */}
             <div className="stats-section">
                 <h2>Recent Orders</h2>
                 <table>

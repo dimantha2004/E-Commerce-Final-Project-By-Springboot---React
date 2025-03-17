@@ -24,6 +24,8 @@ import EditProductPage from './component/admin/EditProductPage';
 import AdminOrdersPage from './component/admin/AdminOrderPage';
 import AdminOrderDetailsPage from './component/admin/AdminOrderDetailsPage';
 import AdminProfile from './component/admin/AdminProfile';
+import BarChart from './component/common/barchart';
+import PieChart from './component/common/piechart';
 
 function App() {
   return (
@@ -51,7 +53,7 @@ function App() {
         <Route path='/admin/orders' element={<AdminRoute element={<AdminOrdersPage/>} />} />
         <Route path='/admin/order-details/:itemId' element={<AdminRoute element={<AdminOrderDetailsPage/>} />} />
         <Route path="/admin-profile" element={<AdminRoute element={<AdminProfile />} />} />
-      </Routes>
+       </Routes>
       <Footer/>
     </CartProvider>
     </BrowserRouter>
