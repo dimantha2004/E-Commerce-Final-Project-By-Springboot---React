@@ -1,53 +1,143 @@
-.register-page{
+.register-page {
     max-width: 400px;
     margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    padding: 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #ffffff, #f9f9f9);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.register-page h2{
-    text-align: center;
-    margin-bottom: 20px;
+.register-page:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
-.register-page form{
+
+.register-page h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 28px;
+    color: #333;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.register-page form {
     display: flex;
     flex-direction: column;
 }
 
-.register-page label{
-    margin-bottom: 5px;
+.register-page label {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #555;
+    font-weight: 600;
 }
 
-.register-page input{
-    margin-bottom: 15px;
-    padding: 10px;
+.register-page input {
+    margin-bottom: 20px;
+    padding: 12px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.register-page button{
-    padding: 10px;
+
+.register-page input:focus {
+    border-color: #f68b1e;
+    box-shadow: 0 0 8px rgba(246, 139, 30, 0.3);
+    outline: none;
+}
+
+.register-page button {
+    padding: 12px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: #f68b1e;
     color: white;
     cursor: pointer;
     font-weight: 800;
     font-size: 18px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.register-page button:hover{
-    background-color: #81480e;
+.register-page button:hover {
+    background-color: #e07d1b;
+    transform: scale(1.02);
 }
-.message{
+
+.register-page button:active {
+    transform: scale(0.98);
+}
+
+.message {
     text-align: center;
-    color: green;
+    color: #28a745;
+    font-size: 14px;
+    margin-top: 15px;
+    font-weight: 600;
 }
-.register-link{
+
+.register-link {
     margin-top: 20px;
     font-size: 14px;
+    text-align: center;
 }
-.register-link a{
+
+.register-link a {
     text-decoration: none;
     color: #f68b1e;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+    color: #e07d1b;
+}
+
+/* Optional: Add a loading spinner or animation */
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.loading-spinner::after {
+    content: "";
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f68b1e;
+    border-top: 4px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .register-page {
+        padding: 20px;
+    }
+
+    .register-page h2 {
+        font-size: 24px;
+    }
+
+    .register-page input {
+        font-size: 13px;
+    }
+
+    .register-page button {
+        font-size: 16px;
+    }
 }

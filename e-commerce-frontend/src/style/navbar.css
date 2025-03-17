@@ -1,46 +1,114 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f9f9f9;
 }
 
 .navbar {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    background-color: #f68b1e;
-    padding: 10px 20px;
-    font-size: 20px;
-    font-family: 600;
+    background: linear-gradient(145deg, #f68b1e, #e07d1b);
+    padding: 15px 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .navbar-brand img {
-    height: 40px;
+    height: 45px;
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.1);
+}
+
+.navbar-search {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin: 0 40px;
+    max-width: 600px;
 }
 
 .navbar-search input {
-    padding: 10px;
-    width: 500px;
+    padding: 12px;
+    width: 100%;
     border: none;
-    border-radius: 3px;
+    border-radius: 5px 0 0 5px;
+    font-size: 16px;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.navbar-search input:focus {
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 .navbar-search button {
-    padding: 10px;
+    padding: 12px 20px;
     border: none;
-    margin-left: 2px;
     background-color: #fff;
     color: #f68b1e;
     font-weight: bold;
-    border-radius: 3px;
+    border-radius: 0 5px 5px 0;
     cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar-search button:hover {
+    background-color: #f68b1e;
+    color: #fff;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 .navbar-link a,
-li {
+.navbar-link li {
     text-decoration: none;
     color: #fff;
-    margin: 0 10px;
     font-weight: bold;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
     list-style: none;
+}
+
+.navbar-link a:hover,
+.navbar-link li:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .navbar-search {
+        margin: 15px 0;
+        width: 100%;
+    }
+
+    .navbar-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .navbar-link a,
+    .navbar-link li {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
 }

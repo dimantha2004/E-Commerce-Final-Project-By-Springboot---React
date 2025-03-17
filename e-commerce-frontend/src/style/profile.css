@@ -1,83 +1,182 @@
-.profile-page{
+.profile-page {
     max-width: 800px;
     margin: 50px auto;
-    padding: 20px;
+    padding: 30px;
     border: 1px solid #ffd8b1;
-    border-radius: 10px;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #ffffff, #f9f9f9);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.profile-page h2{
+.profile-page:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.profile-page h2 {
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 30px;
+    margin-bottom: 25px;
+    font-size: 32px;
     font-weight: 800;
+    color: #333;
+    letter-spacing: -0.5px;
 }
-.profile-page h3{
-    font-size: 30px;
+
+.profile-page h3 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 700;
 }
-.profile-page p{
-    margin-bottom: 10px;
+
+.profile-page p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
 }
-.profile-page strong{
+
+.profile-page strong {
     color: #f68b1e;
     font-size: 20px;
+    font-weight: 600;
 }
-.profile-page ul{
+
+.profile-page ul {
     list-style-type: none;
     padding: 0;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
-.profile-page li{
+
+.profile-page li {
     border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 10px;
+    border-radius: 10px;
+    padding: 15px;
     display: flex;
     align-items: center;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    background-color: #fff;
 }
-.profile-page li:hover{
+
+.profile-page li:hover {
     background-color: #f0f0f0;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
-.profile-page li img{
+
+.profile-page li img {
     width: 80px;
     height: 80px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-right: 20px;
+    transition: transform 0.3s ease;
 }
-.profile-page li div{
+
+.profile-page li:hover img {
+    transform: scale(1.1);
+}
+
+.profile-page li div {
     flex-grow: 1;
 }
 
-.profile-page li h4{
+.profile-page li h4 {
     margin-bottom: 5px;
     font-size: 1.3em;
+    color: #333;
+    font-weight: 600;
 }
 
-.profile-page li p{
+.profile-page li p {
     margin-bottom: 5px;
     color: #666;
+    font-size: 0.95em;
 }
 
-.profile-button{
+.profile-button {
     background-color: #f68b1e;
-    padding: 13px;
+    padding: 15px;
     font-weight: 700;
-    border: 1px solid white;
+    border: none;
+    border-radius: 8px;
     color: #fff;
     font-size: 20px;
-    margin: 10px 0px;
-} 
-
-.profile-button:hover{
-    background-color: #86490d;
+    margin: 20px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
 }
-.error-message{
-    color: red;
+
+.profile-button:hover {
+    background-color: #e07d1b;
+    transform: scale(1.02);
+}
+
+.profile-button:active {
+    transform: scale(0.98);
+}
+
+.error-message {
+    color: #ff4d4d;
     text-align: center;
     font-size: 1.2em;
     margin-top: 20px;
+    font-weight: 600;
+}
+
+/* Optional: Add a loading spinner or animation */
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.loading-spinner::after {
+    content: "";
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f68b1e;
+    border-top: 4px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-page {
+        padding: 20px;
+    }
+
+    .profile-page h2 {
+        font-size: 28px;
+    }
+
+    .profile-page h3 {
+        font-size: 24px;
+    }
+
+    .profile-page li {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profile-page li img {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
 }
