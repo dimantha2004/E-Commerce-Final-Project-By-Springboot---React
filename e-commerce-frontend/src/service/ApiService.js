@@ -3,23 +3,32 @@ import axios from "axios";
 export default class ApiService {
     static BASE_URL = "http://localhost:8080";
 
-    static getHeader() {
+    static getHeader(contentType = "application/json") {
         const token = localStorage.getItem("token");
         return {
             Authorization: token ? `Bearer ${token}` : "",
-            "Content-Type": "application/json"
+            "Content-Type": contentType
         };
     }
 
-    static async makeRequest(method, url, data = null, params = null) {
+    static async makeRequest(method, url, data = null, params = null, headers = null) {
         try {
-            const response = await axios({
+            const config = {
                 method,
                 url: `${this.BASE_URL}${url}`,
-                headers: this.getHeader(),
+                headers: headers || this.getHeader(),
                 data,
                 params
-            });
+            };
+
+            if (data instanceof FormData) {
+                config.headers = {
+                    ...config.headers,
+                    "Content-Type": "multipart/form-data"
+                };
+            }
+
+            const response = await axios(config);
             return response.data;
         } catch (error) {
             console.error(`Error making ${method} request to ${url}:`, error);
@@ -41,23 +50,33 @@ export default class ApiService {
     }
 
     /*-----Product-----*/
+    /*-----Product-----*/
     static async addProduct(formData) {
-        return this.makeRequest("post", "/product/create", formData, {
-            headers: {
-                ...this.getHeader(),
-                "Content-Type": "multipart/form-data"
+        return this.makeRequest(
+            "post", 
+            "/product/create", 
+            formData, 
+            null,  
+            {
+                Authorization: this.getHeader().Authorization,
+                
             }
-        });
+        );
     }
 
     static async updateProduct(productId, formData) {
-        return this.makeRequest("put", `/product/update/${productId}`, formData, {
-            headers: {
-                ...this.getHeader(),
-                "Content-Type": "multipart/form-data"
+        return this.makeRequest(
+            "put", 
+            `/product/update/${productId}`, 
+            formData, 
+            null,  
+            {
+                Authorization: this.getHeader().Authorization,
+                
             }
-        });
+        );
     }
+
 
     static async getAllProducts(page = 0, size = 10) {
         return this.makeRequest("get", "/product/get-all", null, { page, size });

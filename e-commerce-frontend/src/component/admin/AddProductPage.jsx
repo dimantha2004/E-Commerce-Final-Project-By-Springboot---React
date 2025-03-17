@@ -39,11 +39,10 @@ const AddProductPage = () => {
                 setTimeout(() => {
                     setMessage('')
                     navigate('/admin/products')
-                }, 1500);
+                }, 1000);
             }
-
         } catch (error) {
-            setMessage(error.response?.data?.message || error.message || 'unable to upload product')
+            setMessage(error.response?.data?.message || error.message || 'Unable to upload product')
         }
     }
 

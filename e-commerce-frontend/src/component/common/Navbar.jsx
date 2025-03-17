@@ -6,18 +6,22 @@ import ApiService from "../../service/ApiService";
 const Navbar = () => {
     const [searchValue, setSearchValue] = useState("");
     const navigate = useNavigate();
-    const location = useLocation(); 
+    const location = useLocation();
 
     const isAdmin = ApiService.isAdmin(); 
     const isAuthenticated = ApiService.isAuthenticated();
 
     useEffect(() => {
+        console.log("Is Admin:", isAdmin);
+        console.log("Is Authenticated:", isAuthenticated);
+    }, [isAdmin, isAuthenticated]);
+
+    useEffect(() => {
         if (isAuthenticated && isAdmin && location.pathname === "/login") {
-            navigate("/admin-profile"); 
+            navigate("/admin-profile");
         }
     }, [isAuthenticated, isAdmin, navigate, location.pathname]);
 
-    
     const handleSearchChange = (e) => {
         setSearchValue(e.target.value);
     };
@@ -43,7 +47,6 @@ const Navbar = () => {
                 <NavLink to="/"><img src="./ecomlogo.png" alt="Online Shopping" /></NavLink>
             </div>
 
-            
             {isAuthenticated && (
                 <form className="navbar-search" onSubmit={handleSearchSubmit}>
                     <input
@@ -57,7 +60,6 @@ const Navbar = () => {
             )}
 
             <div className="navbar-link">
-                
                 {isAuthenticated && !isAdmin && (
                     <>
                         <NavLink to="/">Home</NavLink>
@@ -68,7 +70,6 @@ const Navbar = () => {
                     </>
                 )}
 
-            
                 {isAuthenticated && isAdmin && (
                     <>
                         <NavLink to="/admin-profile">Admin Profile</NavLink>
@@ -77,7 +78,6 @@ const Navbar = () => {
                     </>
                 )}
 
-                
                 {!isAuthenticated && <NavLink to="/login">Login</NavLink>}
             </div>
         </nav>
