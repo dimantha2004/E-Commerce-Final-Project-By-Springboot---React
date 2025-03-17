@@ -10,7 +10,7 @@
     --transition: all 0.3s ease;
 }
 
-/* General Styles for Navbar */
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -41,14 +41,13 @@
     filter: brightness(1.2);
 }
 
-/* Navbar Search Styling */
 .navbar-search {
     display: flex;
-    height: 45px;
+    height: 40px;
     align-items: center;
     border-radius: 25px;
     background-color: #fff;
-    padding: 5px 12px;
+    padding: 5px 120px;
     box-shadow: var(--shadow);
     transition: var(--transition);
 }
@@ -188,7 +187,6 @@
     }
 }
 
-/* Mobile Menu Toggle */
 .menu-toggle {
     display: none;
     flex-direction: column;
