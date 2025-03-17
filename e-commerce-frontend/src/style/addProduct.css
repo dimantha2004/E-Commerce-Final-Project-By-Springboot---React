@@ -1,78 +1,100 @@
-.product-form {
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
     display: flex;
-    flex-direction: column;
-    width: 50%;
-    margin: auto;
-    margin-bottom: 250px;
-    padding: 30px;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.product-form {
+    background: #ffffff;
+    padding: 2.5rem;
     border-radius: 12px;
-    background-color: #ffffff;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    animation: fadeIn 0.6s ease-out;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.product-form h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: #333;
+    text-align: center;
 }
 
 .product-form input,
 .product-form select,
 .product-form textarea {
-    margin: 10px 0;
-    padding: 12px;
-    font-size: 16px;
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.5rem;
     border: 1px solid #ddd;
     border-radius: 8px;
-    outline: none;
+    font-size: 1rem;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .product-form input:focus,
 .product-form select:focus,
 .product-form textarea:focus {
-    border-color: #3498db;
-    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+    border-color: #6c63ff;
+    box-shadow: 0 0 8px rgba(108, 99, 255, 0.3);
+    outline: none;
+}
+
+.product-form textarea {
+    resize: vertical;
+    min-height: 100px;
 }
 
 .product-form button {
-    background: linear-gradient(135deg, #f68b1e, #ff9f43);
-    padding: 15px;
-    border: none;
-    cursor: pointer;
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #6c63ff;
     color: #fff;
-    font-weight: 800;
-    font-size: 16px;
+    border: none;
     border-radius: 8px;
-    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 12px rgba(246, 139, 30, 0.3);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .product-form button:hover {
-    background: linear-gradient(135deg, #ff9f43, #f68b1e);
+    background-color: #574fdb;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(246, 139, 30, 0.4);
 }
 
 .product-form button:active {
     transform: translateY(0);
-    box-shadow: 0 4px 12px rgba(246, 139, 30, 0.3);
 }
 
-.product-form img {
-    max-width: 100px;
-    margin: 10px 0;
+.message {
+    text-align: center;
+    margin-bottom: 1rem;
+    padding: 0.8rem;
     border-radius: 8px;
-    border: 1px solid #ddd;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: 0.9rem;
+    animation: slideIn 0.5s ease-in-out;
 }
 
-.product-form img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+.message.success {
+    background-color: #e3fcec;
+    color: #2ecc71;
 }
 
-/* Animations */
+.message.error {
+    background-color: #ffe3e3;
+    color: #e74c3c;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(-20px);
     }
     to {
         opacity: 1;
@@ -80,12 +102,13 @@
     }
 }
 
-/* Optional: Add a subtle background pattern or gradient to the page */
-body {
-    background: linear-gradient(135deg, #f4f7f6, #e0e5ec);
-    min-height: 100vh;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }

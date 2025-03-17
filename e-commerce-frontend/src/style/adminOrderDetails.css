@@ -1,98 +1,134 @@
 .order-details-page {
-    padding: 30px;
-    width: 50%;
-    margin: auto;
-    margin-bottom: 100px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    animation: fadeIn 0.6s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
 }
 
 .order-details-page h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1.5rem;
     text-align: center;
-    font-weight: 700;
-    font-size: 28px;
-    color: #2c3e50;
-    margin-bottom: 25px;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 .message {
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 16px;
-    color: #555;
+    margin-bottom: 1.5rem;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    animation: slideIn 0.5s ease-in-out;
+}
+
+.message.success {
+    background-color: #e3fcec;
+    color: #2ecc71;
+}
+
+.message.error {
+    background-color: #ffe3e3;
+    color: #e74c3c;
 }
 
 .order-item-details {
-    border: 1px solid #ddd;
-    padding: 25px;
-    margin-bottom: 20px;
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 800px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.order-item-details .info {
+    margin-bottom: 1.5rem;
+}
+
+.order-item-details h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.order-item-details p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+.order-item-details strong {
+    color: #333;
+}
+
+.order-item-details img {
+    max-width: 100%;
+    height: auto;
     border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status-change {
+    margin-top: 1.5rem;
+    padding: 1rem;
     background-color: #f9f9f9;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.order-item-details:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.info, .status-change {
-    margin-bottom: 20px;
-}
-
-.info p {
-    margin: 8px 0;
-    font-size: 16px;
-    color: #444;
+.status-change h4 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 1rem;
 }
 
 .status-option {
-    padding: 12px;
+    width: 100%;
+    padding: 0.8rem;
     border: 1px solid #ddd;
     border-radius: 8px;
-    font-size: 16px;
-    outline: none;
+    font-size: 1rem;
+    margin-bottom: 1rem;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .status-option:focus {
-    border-color: #3498db;
-    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+    border-color: #6c63ff;
+    box-shadow: 0 0 8px rgba(108, 99, 255, 0.3);
+    outline: none;
 }
 
 .update-status-button {
-    background: linear-gradient(135deg, #f68b1e, #ff9f43);
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #6c63ff;
     color: #fff;
-    margin-left: 10px;
-    padding: 12px 20px;
-    font-weight: 800;
-    font-size: 16px;
     border: none;
     border-radius: 8px;
+    font-size: 1rem;
     cursor: pointer;
-    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 12px rgba(246, 139, 30, 0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .update-status-button:hover {
-    background: linear-gradient(135deg, #ff9f43, #f68b1e);
+    background-color: #574fdb;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(246, 139, 30, 0.4);
 }
 
 .update-status-button:active {
     transform: translateY(0);
-    box-shadow: 0 4px 12px rgba(246, 139, 30, 0.3);
 }
 
-/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(-20px);
     }
     to {
         opacity: 1;
@@ -100,12 +136,13 @@
     }
 }
 
-/* Optional: Add a subtle background pattern or gradient to the page */
-body {
-    background: linear-gradient(135deg, #f4f7f6, #e0e5ec);
-    min-height: 100vh;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }

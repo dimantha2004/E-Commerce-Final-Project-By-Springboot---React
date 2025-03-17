@@ -1,129 +1,132 @@
 .admin-category-page {
-    max-width: 800px;
-    margin: 0 auto 50px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
     padding: 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    animation: fadeIn 0.6s ease-out;
+    font-family: 'Arial', sans-serif;
 }
 
 .admin-category-list {
+    background: #ffffff;
+    padding: 2rem;
     border-radius: 12px;
-    padding: 25px;
-    background-color: #ffffff;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 .admin-category-list h2 {
-    font-size: 28px;
-    margin-bottom: 25px;
-    color: #2c3e50;
-    font-weight: 700;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1.5rem;
     text-align: center;
 }
 
 .admin-category-list button {
-    background: linear-gradient(135deg, #f68b1e, #ff9f43);
+    display: block;
+    margin: 0 auto 1.5rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #6c63ff;
     color: #fff;
-    font-size: 18px;
     border: none;
-    padding: 12px 20px;
-    margin-bottom: 15px;
-    cursor: pointer;
     border-radius: 8px;
-    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 12px rgba(246, 139, 30, 0.3);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .admin-category-list button:hover {
-    background: linear-gradient(135deg, #ff9f43, #f68b1e);
+    background-color: #574fdb;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(246, 139, 30, 0.4);
 }
 
 .admin-category-list button:active {
     transform: translateY(0);
-    box-shadow: 0 4px 12px rgba(246, 139, 30, 0.3);
 }
 
 .admin-category-list ul {
-    list-style-type: none;
-    padding-left: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.admin-category-list ul li {
+.admin-category-list li {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
     background-color: #f9f9f9;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.admin-category-list ul li:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.admin-category-list li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.admin-category-list ul li span {
-    color: #444;
-    font-size: 16px;
-    font-weight: 500;
+.admin-category-list li span {
+    font-size: 1.1rem;
+    color: #333;
 }
 
-.admin-bt button {
-    padding: 8px 16px;
+.admin-bt {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.admin-btn-edit {
+    padding: 0.5rem 1rem;
+    background-color: #4caf50;
+    color: #fff;
     border: none;
     border-radius: 6px;
+    font-size: 0.9rem;
     cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.admin-bt button:hover {
+.admin-btn-edit:hover {
+    background-color: #45a049;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.admin-bt .admin-btn-delete {
-    background-color: #ff6b6b;
+.admin-btn-edit:active {
+    transform: translateY(0);
+}
+
+.admin-bt button:last-child {
+    padding: 0.5rem 1rem;
+    background-color: #e74c3c;
     color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.admin-bt .admin-btn-delete:hover {
-    background-color: #ff4c4c;
+.admin-bt button:last-child:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
 }
 
-.admin-bt .admin-btn-edit {
-    background: linear-gradient(135deg, #f68b1e, #ff9f43);
-    color: #fff;
+.admin-bt button:last-child:active {
+    transform: translateY(0);
 }
 
-.admin-bt .admin-btn-edit:hover {
-    background: linear-gradient(135deg, #ff9f43, #f68b1e);
-}
-
-/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(-20px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-/* Optional: Add a subtle background pattern or gradient to the page */
-body {
-    background: linear-gradient(135deg, #f4f7f6, #e0e5ec);
-    min-height: 100vh;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
