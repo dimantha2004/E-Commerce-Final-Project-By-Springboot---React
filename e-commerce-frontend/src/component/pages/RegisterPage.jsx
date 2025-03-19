@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ApiService from "../../service/ApiService";
-import '../../style/register.css'
+import '../../style/register.css';
 
 const RegisterPage = () => {
-
     const [formData, setFormData] = useState({
         email: '',
         name: '',
         phoneNumber: '',
-        password: ''
+        password: '',
+        role: 'USER' // Default to USER
     });
 
     const [message, setMessage] = useState(null);
@@ -18,22 +18,22 @@ const RegisterPage = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-    }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await ApiService.registerUser(formData);
             if (response.status === 200) {
-                setMessage("User Successfully Registerd...!");
+                setMessage("User Successfully Registered...!");
                 setTimeout(() => {
-                    navigate("/login")
-                }, 4000)
+                    navigate("/login");
+                }, 4000);
             }
         } catch (error) {
-            setMessage(error.response?.data.message || error.message || "unable to register a user");
+            setMessage(error.response?.data.message || error.message || "Unable to register a user");
         }
-    }
+    };
 
     return (
         <div className="register-page">
@@ -46,7 +46,8 @@ const RegisterPage = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    required />
+                    required
+                />
 
                 <label>Name: </label>
                 <input
@@ -54,7 +55,8 @@ const RegisterPage = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    required />
+                    required
+                />
 
                 <label>Phone Number: </label>
                 <input
@@ -62,7 +64,8 @@ const RegisterPage = () => {
                     name="phoneNumber"
                     value={formData.phoneNumber}
                     onChange={handleChange}
-                    required />
+                    required
+                />
 
                 <label>Password: </label>
                 <input
@@ -70,15 +73,27 @@ const RegisterPage = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    required />
+                    required
+                />
 
-                    <button type="submit">Register</button>
-                    <p className="register-link">
-                        Already have an account? <a href="/login">Login</a>
-                    </p>
+                <label>Register as: </label>
+                <select
+                    name="role"
+                    value={formData.role}
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="USER">User</option>
+                    <option value="ADMIN">Admin</option>
+                </select>
+
+                <button type="submit">Register</button>
+                <p className="register-link">
+                    Already have an account? <a href="/login">Login</a>
+                </p>
             </form>
         </div>
-    )
-}
+    );
+};
 
 export default RegisterPage;
