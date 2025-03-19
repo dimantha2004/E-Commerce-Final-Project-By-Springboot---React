@@ -9,7 +9,7 @@ const RegisterPage = () => {
         name: '',
         phoneNumber: '',
         password: '',
-        role: 'USER' // Default to USER
+        role: 'USER' 
     });
 
     const [message, setMessage] = useState(null);
