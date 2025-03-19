@@ -18,7 +18,8 @@ export default class ApiService {
                 url: `${this.BASE_URL}${url}`,
                 headers: headers || this.getHeader(),
                 data,
-                params
+                params,
+                withCredentials: true
             };
 
             if (data instanceof FormData) {
@@ -170,5 +171,34 @@ export default class ApiService {
     static isAdmin() {
         const role = localStorage.getItem("role");
         return role === "ADMIN";
+    }
+    
+    // ---PAYMENT---
+    static async createCheckoutSession(orderRequest) {
+    return this.makeRequest("post", "/api/create-checkout-session", orderRequest);
+    }
+    
+    static async createCheckoutSession(orderRequest) {
+        try {
+            const response = await this.makeRequest(
+                "post", 
+                "/api/create-checkout-session", 
+                orderRequest,
+                null,
+                {
+                    ...this.getHeader(),
+                
+                }
+            );
+            
+            if (!response?.sessionId) {
+                throw new Error("Invalid response from payment server");
+            }
+            
+            return response;
+        } catch (error) {
+            console.error("Checkout error:", error);
+            throw new Error(error.response?.data?.message || "Payment processing failed");
+        }
     }
 }

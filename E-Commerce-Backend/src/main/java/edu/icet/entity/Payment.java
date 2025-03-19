@@ -14,6 +14,7 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private BigDecimal amount;
     private String method;
     private String status;
@@ -21,5 +22,6 @@ public class Payment {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
-    private final LocalDateTime createdAt=LocalDateTime.now();
+
+    private LocalDateTime createdAt = LocalDateTime.now();
 }
