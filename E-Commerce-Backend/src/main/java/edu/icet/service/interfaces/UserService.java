@@ -17,4 +17,9 @@ public interface UserService {
 
     Response getUserInfoAndOrderHistory();
 
+    Response initiatePasswordReset(String email);
+
+    Response verifyOtp(String email, String otp);
+
+    Response resetPassword(String email, String newPassword);
 }

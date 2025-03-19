@@ -36,7 +36,7 @@ export default class ApiService {
         }
     }
 
-    /*-----User-----*/
+    // ---USER---
     static async registerUser(registration) {
         return this.makeRequest("post", "/auth/register", registration);
     }
@@ -48,9 +48,19 @@ export default class ApiService {
     static async getLoggedInUserInfo() {
         return this.makeRequest("get", "/user/my-info");
     }
-
-    /*-----Product-----*/
-    /*-----Product-----*/
+    static sendOtp = async (email) => {
+        return this.makeRequest("post", "/auth/forgot-password", null, { email });
+    }
+    
+    static verifyOtp = async (email, otp) => {
+        return this.makeRequest("post", "/auth/verify-otp", null, { email, otp });
+    }
+    
+    static resetPassword = async (email, newPassword) => {
+        return this.makeRequest("post", "/auth/reset-password", null, { email, newPassword });
+    }
+    
+    //---PRODUCT---
     static async addProduct(formData) {
         return this.makeRequest(
             "post", 
@@ -98,7 +108,7 @@ export default class ApiService {
         return this.makeRequest("delete", `/product/delete/${productId}`);
     }
 
-    /*-----Category-----*/
+    //---CATEGORY---
     static async createCategory(body) {
         return this.makeRequest("post", "/category/create", body);
     }
@@ -119,7 +129,7 @@ export default class ApiService {
         return this.makeRequest("delete", `/category/delete/${categoryId}`);
     }
 
-    /*-----Order-----*/
+    //---ORDER---
     static async createOrder(body) {
         return this.makeRequest("post", "/order/create", body);
     }
@@ -140,12 +150,12 @@ export default class ApiService {
         return this.makeRequest("put", `/order/update-item-status/${orderItemId}`, null, { status });
     }
 
-    /*-----Address-----*/
+    //ADDRESS---
     static async saveAddress(body) {
         return this.makeRequest("post", "/address/save", body);
     }
 
-    /*-----Authentication-----*/
+    //---AUTHENTICATION---
     static logout() {
         localStorage.removeItem("token");
         localStorage.removeItem("role");

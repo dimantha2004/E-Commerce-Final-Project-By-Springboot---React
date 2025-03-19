@@ -45,6 +45,12 @@ public class User {
     @Column(name = "created_at")
     private LocalDateTime createdAt=LocalDateTime.now();
 
+    @Column(name = "otp")
+    private String otp;
+
+    @Column(name = "otp_expiry")
+    private LocalDateTime otpExpiry;
+
     public static Builder builder() {
         return new Builder();
     }

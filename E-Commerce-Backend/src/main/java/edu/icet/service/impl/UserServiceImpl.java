@@ -10,6 +10,7 @@ import edu.icet.exception.NotFoundException;
 import edu.icet.mapper.EntityDtoMapper;
 import edu.icet.repository.UserRepository;
 import edu.icet.security.JwtUtils;
+import edu.icet.service.interfaces.EmailService;
 import edu.icet.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 
 @Service
 @Slf4j
@@ -30,6 +33,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
     private final EntityDtoMapper entityDtoMapper;
+    private final EmailService emailService;
 
     @Override
     public Response registerUser(UserDto registrationRequest) {
@@ -110,5 +114,62 @@ public class UserServiceImpl implements UserService {
                 .status(200)
                 .user(userDto)
                 .build();
+    }
+    public Response initiatePasswordReset(String email) {
+        try {
+            User user = userRepo.findByEmail(email)
+                    .orElseThrow(() -> new NotFoundException("Email not found"));
+
+            String otp = generateOtp();
+            user.setOtp(otp);
+            user.setOtpExpiry(LocalDateTime.now().plusMinutes(5));
+            userRepo.save(user);
+
+            emailService.sendOtpEmail(user.getEmail(), otp);
+
+            return Response.builder()
+                    .status(200)
+                    .message("OTP sent to email")
+                    .build();
+        } catch (Exception e) {
+            log.error("Password reset failed for email: {}", email, e);
+            return Response.builder()
+                    .status(500)
+                    .message("Failed to send OTP: " + e.getMessage())
+                    .build();
+        }
+    }
+
+    public Response verifyOtp(String email, String otp) {
+        User user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Email not found"));
+
+        if (!user.getOtp().equals(otp) || LocalDateTime.now().isAfter(user.getOtpExpiry())) {
+            throw new InvalidCredentialsException("Invalid or expired OTP");
+        }
+
+        return Response.builder()
+                .status(200)
+                .message("OTP verified")
+                .build();
+    }
+
+    public Response resetPassword(String email, String newPassword) {
+        User user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Email not found"));
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setOtp(null);
+        user.setOtpExpiry(null);
+        userRepo.save(user);
+
+        return Response.builder()
+                .status(200)
+                .message("Password reset successful")
+                .build();
+    }
+
+    private String generateOtp() {
+        return String.valueOf(new Random().nextInt(900000) + 100000);
     }
 }
