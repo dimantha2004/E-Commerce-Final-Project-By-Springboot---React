@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/ecom
+    username: root
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+jwt:
+  secretKey: MjAwNDE4MzA0MjgwcGFrYXlhMjAwNDE4MzA0MjgwcGFrYXlh
+
+aws:
+  s3:
+    bucketName: e-commerce-onlineshopping
+    access: "AKIA2LIP2C3U3LN5YMAJ"
+    secret: "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"
