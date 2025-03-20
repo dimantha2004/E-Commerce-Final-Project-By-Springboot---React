@@ -7,13 +7,16 @@ import edu.icet.entity.Product;
 import edu.icet.exception.NotFoundException;
 import edu.icet.mapper.EntityDtoMapper;
 import edu.icet.repository.CategoryRepository;
+import edu.icet.repository.OrderItemRepository;
 import edu.icet.repository.ProductRepository;
 import edu.icet.service.Awss3Service;
 import edu.icet.service.interfaces.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
@@ -30,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryRepository categoryRepo;
     private final EntityDtoMapper entityDtoMapper;
     private final Awss3Service awsS3Service;
-
+    private final OrderItemRepository OrderItemRepository;
 
 
     @Override
@@ -80,16 +83,28 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-    @Override
-    public Response deleteProduct(Long productId) {
-        Product product = productRepo.findById(productId).orElseThrow(()-> new NotFoundException("Product Not Found"));
-        productRepo.delete(product);
 
-        return Response.builder()
-                .status(200)
-                .message("Product deleted successfully")
-                .build();
+    @Transactional
+    public Response deleteProduct(Long productId) {
+        try {
+            // Delete related order items using instance method
+            OrderItemRepository.deleteByProductId(productId);
+
+            // Delete product
+            productRepo.deleteById(productId);
+
+            return Response.builder()
+                    .status(HttpStatus.OK.value())
+                    .message("Product deleted successfully")
+                    .build();
+        } catch (Exception e) {
+            return Response.builder()
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .message("Delete failed: " + e.getMessage())
+                    .build();
+        }
     }
+
 
     @Override
     public Response getProductById(Long productId) {

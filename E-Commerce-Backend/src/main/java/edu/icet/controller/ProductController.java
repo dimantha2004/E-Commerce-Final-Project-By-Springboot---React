@@ -29,7 +29,7 @@ public class ProductController {
             @RequestParam("description") String description,
             @RequestParam("price") BigDecimal price
     ) {
-        if (categoryId == null || image.isEmpty() || name.isEmpty() || description.isEmpty() || price == null){
+        if (categoryId == null || image.isEmpty() || name.isEmpty() || description.isEmpty() || price == null) {
             throw new InvalidCredentialsException("All Fields are Required");
         }
         return ResponseEntity.ok(productService.createProduct(categoryId, image, name, description, price));
@@ -55,34 +55,29 @@ public class ProductController {
         ));
     }
 
-
     @DeleteMapping("/delete/{productId}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Response> deleteProduct(@PathVariable Long productId){
+    public ResponseEntity<Response> deleteProduct(@PathVariable Long productId) {
         return ResponseEntity.ok(productService.deleteProduct(productId));
-
     }
 
     @GetMapping("/get-by-product-id/{productId}")
-    public ResponseEntity<Response> getProductById(@PathVariable Long productId){
+    public ResponseEntity<Response> getProductById(@PathVariable Long productId) {
         return ResponseEntity.ok(productService.getProductById(productId));
     }
 
     @GetMapping("/get-all")
-    public ResponseEntity<Response> getAllProducts(){
+    public ResponseEntity<Response> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
-
     @GetMapping("/get-by-category-id/{categoryId}")
-    public ResponseEntity<Response> getProductsByCategory(@PathVariable Long categoryId){
+    public ResponseEntity<Response> getProductsByCategory(@PathVariable Long categoryId) {
         return ResponseEntity.ok(productService.getProductsByCategory(categoryId));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Response> searchForProduct(@RequestParam String searchValue){
+    public ResponseEntity<Response> searchForProduct(@RequestParam String searchValue) {
         return ResponseEntity.ok(productService.searchProduct(searchValue));
     }
 }
-
-
