@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ApiService from "../../service/ApiService";
 import '../../style/login.css';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({
@@ -81,6 +82,27 @@ const LoginPage = () => {
         }
     };
 
+    const handleGoogleSuccess = async (credentialResponse) => {
+        try {
+          console.log("Google credential received:", credentialResponse);
+          const response = await ApiService.googleLogin(credentialResponse.credential);
+          console.log("Backend response:", response);
+          
+          if (response.status === 200) {
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('role', response.role);
+            navigate("/profile");
+          }
+        } catch (error) {
+          console.error("Google login error:", error);
+          setMessage(error.response?.data?.message || "Google login failed");
+        }
+      };
+
+    const handleGoogleError = () => {
+        setMessage("Google login failed");
+    };
+
     return (
         <div className="login-container">
             <div className="login-form">
@@ -123,6 +145,20 @@ const LoginPage = () => {
                         </p>
                     </div>
                 </form>
+
+                <GoogleOAuthProvider 
+  clientId="646368842911-c8fbrq65ih2usst9huv7q6hbq9cjtpc7.apps.googleusercontent.com"
+  nonce=""  
+  redirectUri={window.location.origin}  
+>
+                    <div className="google-signin">
+                        <GoogleLogin
+                            onSuccess={handleGoogleSuccess}
+                            onError={handleGoogleError}
+                            useOneTap
+                        />
+                    </div>
+                </GoogleOAuthProvider>
             </div>
 
             {showForgotPassword && (

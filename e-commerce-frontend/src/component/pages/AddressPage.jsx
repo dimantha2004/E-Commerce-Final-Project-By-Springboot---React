@@ -17,12 +17,14 @@ const AddressPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+
     useEffect(() => {
 
         if (location.pathname === '/edit-address') {
             fetchUserInfo();
         }
     }, [location.pathname]);
+
 
     const fetchUserInfo = async()=>{
         try {
@@ -43,24 +45,20 @@ const AddressPage = () => {
         }))
     }
 
-    const handSubmit = async (e) => {
-    e.preventDefault();
-    try {
-        const response = await ApiService.saveAddress(address);
-        console.log("Address saved:", response); // Log the response
-
-        // Fetch the updated user info after saving the address
-        await fetchUserInfo();
-
-        navigate("/profile");
-    } catch (error) {
-        setError(error.response?.data?.message || error.message || "Failed to save/update address");
+    const handSubmit = async (e) =>{
+        e.preventDefault();
+        try {
+            await ApiService.saveAddress(address);
+            navigate("/profile")
+        } catch (error) {
+            setError(error.response?.data?.message || error.message || "Failed to save/update address")
+        }
     }
-};
+
 
     return(
         <div className="address-page">
-            <h2>{location.pathname === '/edit-address' ? 'Edit Address' : "Add Address"}</h2>
+            <h2>{location.pathname === '/edit-address' ? 'Edit Address' : "Add Addresss"}</h2>
             {error && <p className="error-message">{error}</p>}
             
             <form onSubmit={handSubmit}>
@@ -92,7 +90,7 @@ const AddressPage = () => {
                 <label>
                     Zip Code:
                     <input type="text"
-                    name="zipCode"
+                    name="zipcode"
                     value={address.zipCode}
                     onChange={handleChange}
                     required/>
@@ -106,7 +104,7 @@ const AddressPage = () => {
                     onChange={handleChange}
                     required/>
                 </label>
-                <button type="submit">{location.pathname === '/edit-address' ? 'Edit Address' : "Save Address"}</button>
+                <button type="submit">{location.pathname === '/edit-address' ? 'Edit Address' : "Save Addresss"}</button>
 
             </form>
         </div>

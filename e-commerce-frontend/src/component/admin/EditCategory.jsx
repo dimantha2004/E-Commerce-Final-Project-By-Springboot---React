@@ -1,116 +1,113 @@
 import React, { useState, useEffect } from "react";
 import ApiService from "../../service/ApiService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import '../../style/addCategory.css';
 
-const CategoryManagement = () => {
-    const [categories, setCategories] = useState([]);
+const EditCategory = () => {
+    const { categoryId } = useParams();
+    const [name, setName] = useState('');
     const [message, setMessage] = useState('');
+    const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchCategories();
-    }, []);
+        fetchCategory(categoryId);
+    }, [categoryId]);
 
-    const fetchCategories = async () => {
+    const fetchCategory = async (id) => {
         setLoading(true);
+        setError(null);
         try {
-            const response = await ApiService.getAllCategories();
-            if (response.categoryList) {
-                setCategories(response.categoryList);
+            const response = await ApiService.getCategoryById(id);
+            console.log("API Response:", response);
+            
+            if (!response.error && response.category) {
+                setName(response.category.name);
             } else {
-                setMessage("Failed to fetch categories");
+                setError(response.message || "Category not found");
             }
         } catch (error) {
-            setMessage("An unexpected error occurred. Please try again later.");
-            console.error("Error fetching categories:", error);
+            console.error("Full error details:", error);
+            setError("Failed to load category. Check console for details.");
         } finally {
             setLoading(false);
         }
     };
 
-    const handleDelete = async (categoryId) => {
-        if (window.confirm("Are you sure you want to delete this category?")) {
-            try {
-                const response = await ApiService.deleteCategory(categoryId);
-                
-                // Check the status code to determine if there was an error
-                if (response.status !== 200) {
-                    // This is where we display the error message from the backend
-                    setMessage(response.message || "Failed to delete category");
-                } else {
-                    setMessage("Category deleted successfully");
-                    // Refresh the categories list
-                    fetchCategories();
-                }
-                
-                // Automatically clear the message after 5 seconds
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!name.trim()) {
+            setMessage("Category name cannot be empty");
+            return;
+        }
+        
+        try {
+            const response = await ApiService.updateCategory(categoryId, { name });
+            
+            if (!response.error) {
+                setMessage("Category updated successfully");
+                setError(null);
                 setTimeout(() => {
-                    setMessage('');
-                }, 5000);
-            } catch (error) {
-                setMessage("An unexpected error occurred. Please try again later.");
-                console.error("Error deleting category:", error);
+                    navigate("/admin/categories");
+                }, 2000);
+            } else {
+                setMessage(response.message || "Failed to update category");
             }
+        } catch (error) {
+            setMessage("An unexpected error occurred. Please try again later.");
+            console.error("Error updating category:", error);
         }
     };
 
-    const handleEdit = (categoryId) => {
-        navigate(`/admin/categories/edit/${categoryId}`);
-    };
-
-    const handleAddNew = () => {
-        navigate("/admin/categories/add");
-    };
-
-    if (loading && categories.length === 0) {
-        return <div className="category-management-page"><p>Loading categories...</p></div>;
+    if (loading) {
+        return <div className="add-category-page"><p>Loading category data...</p></div>;
     }
 
     return (
-        <div className="category-management-page">
-            <h2>Category Management</h2>
-            
-            {message && (
-                <div className="message-container">
-                    <p className={message.includes("successfully") ? "success-message" : "error-message"}>
-                        {message}
-                    </p>
+        <div className="add-category-page">
+            {error && (
+                <div className="error-container">
+                    <p className="error-message">{error}</p>
+                    <button onClick={() => fetchCategory(categoryId)}>Retry</button>
                 </div>
             )}
             
-            <button onClick={handleAddNew} className="add-button">Add New Category</button>
-            
-            <div className="categories-list">
-                {categories.length === 0 ? (
-                    <p>No categories found.</p>
-                ) : (
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {categories.map(category => (
-                                <tr key={category.id}>
-                                    <td>{category.id}</td>
-                                    <td>{category.name}</td>
-                                    <td>
-                                        <button onClick={() => handleEdit(category.id)} className="edit-button">Edit</button>
-                                        <button onClick={() => handleDelete(category.id)} className="delete-button">Delete</button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                )}
-            </div>
+            {message && (
+                <div className="success-container">
+                    <p className="success-message">{message}</p>
+                </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="category-form">
+                <h2>Edit Category</h2>
+                <input 
+                    type="text"
+                    placeholder="Category Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required 
+                />
+                <div className="button-group">
+                    <button 
+                        type="submit" 
+                        className="btn-primary"
+                        disabled={loading || !name.trim()}
+                    >
+                        {loading ? "Updating..." : "Update"}
+                    </button>
+                    <button 
+                        type="button" 
+                        className="btn-secondary"
+                        onClick={() => navigate("/admin/categories")}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </form>
         </div>
     );
 };
 
-export default CategoryManagement;
+export default EditCategory;

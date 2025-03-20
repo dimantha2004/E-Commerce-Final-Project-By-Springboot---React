@@ -32,7 +32,7 @@ export default class ApiService {
             const response = await axios(config);
             return response.data;
         } catch (error) {
-            // Handle network errors differently than API errors
+    
             if (error.message === "Network Error") {
                 console.error(`Network Error ${method} ${url}: Server might be down or unreachable`);
                 return {
@@ -44,7 +44,6 @@ export default class ApiService {
             const errorMessage = error.response?.data?.message || error.message;
             console.error(`Error ${method} ${url}:`, errorMessage);
             
-            // Return a structured error response instead of throwing
             return {
                 status: error.response?.status || 500,
                 message: errorMessage,
@@ -54,12 +53,13 @@ export default class ApiService {
     }
 
     // --- CATEGORY METHODS ---
-    static async getAllCategory() {
-        return this.makeRequest("get", "/category/get-all");
-    }
-
+    // --- CATEGORY METHODS ---
     static async createCategory(body) {
         return this.makeRequest("post", "/category/create", body);
+    }
+
+    static async getAllCategory() {
+        return this.makeRequest("get", "/category/get-all");
     }
 
     static async getCategoryById(categoryId) {
@@ -178,4 +178,16 @@ export default class ApiService {
     static isAdmin() {
         return localStorage.getItem("role") === "ADMIN";
     }
+    static async googleLogin(googleToken) {
+        return this.makeRequest("post", "/auth/google", { token: googleToken });
+    }
+    //---ADDRESS---
+    
+    static async saveAddress(body) {
+        const response = await axios.post(`${this.BASE_URL}/address/save`, body, {
+            headers: this.getHeader()
+        })
+        return response.data;
+    }
+
 }
